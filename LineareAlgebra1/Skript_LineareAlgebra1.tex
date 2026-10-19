@@ -1,0 +1,442 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=red,citecolor=red,urlcolor=red]{hyperref}
+
+% --- Umgebungen (Stil des Kurzskripts: fettes Label, kursiver Text) ---------
+\newtheoremstyle{kurzskript}%
+  {\medskipamount}{\medskipamount}% Abstand oben / unten
+  {\itshape}{}%                      Textschrift, Einzug
+  {\bfseries}{}{ }%                  Labelschrift, Punkt, Abstand
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ \bfseries(#3)}}
+\theoremstyle{kurzskript}
+\newtheorem{satz}{Satz}[section]             % Nummerierung (1.1), (1.2), ...
+\newtheorem{definition}[satz]{Definition}
+\newtheorem{lemma}[satz]{Lemma}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{beispiel}[satz]{Beispiel}
+\newtheorem{axiom}[satz]{Axiom}
+\newtheorem*{axiomohne}{Axiom}
+\newtheorem*{satzohne}{Satz}
+\newtheorem*{bsp}{Beispiel}
+\newtheorem*{bem}{Bemerkung}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par\pushQED{\qed}%
+  \normalfont\topsep\medskipamount\relax
+  \trivlist\item[\hskip\labelsep\bfseries #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\proofname}{Beweis}
+\renewcommand{\qedsymbol}{$\square$}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Pm}{\mathbb{P}}
+\newcommand{\Pot}{\mathcal{P}}
+
+\title{Lineare Algebra 1}
+\author{Mitschrift}
+\date{Wintersemester 2026/27}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ======================================================================
+% Kapitel 1
+% ======================================================================
+\section*{Kapitel 1: Grundbegriffe -- Mengensprache und mathematische Argumentation}
+\addcontentsline{toc}{part}{Kapitel 1: Grundbegriffe}
+
+\paragraph{Untersuchungsgegenstände bzw.\ Werkzeuge der Linearen Algebra.}
+Determinanten, Matrizen, Eigenwerte, Vektorräume, (lineare) Dimension, lineare Abbildungen, Multilinearformen usw.\ -- entwickelt vor allem im 18.\ und 19.~Jahrhundert.
+
+\section{Mengen und Relationen}
+
+Grundlage ist das \emph{Zermelo-Fraenkelsche Mengenaxiomensystem} (1907--1930).
+
+\paragraph{Warum Axiome?}
+\emph{Berrysches Paradoxon:} \glqq Welches ist die kleinste natürliche Zahl, die sich nicht mittels weniger als sechzehn deutschen Wörtern definieren lässt?\grqq{} -- Diese Beschreibung benötigt selbst nur 15 Wörter und definiert damit die Zahl, die sich angeblich nicht so definieren lässt.
+
+Wir brauchen daher
+\begin{itemize}
+  \item eine formalisierte Sprache bzw.\ Schreibweise,
+  \item mathematische Aussagen, die entweder wahr oder falsch sind -- nicht beides gleichzeitig.
+\end{itemize}
+
+\paragraph{Grundobjekte.}
+Mengen $A, B, C, \dots, a, b, c, \dots$ und die Relation \glqq Element sein\grqq: $a \in A$ bzw.\ $a \notin A$. Man schreibt auch $A \ni a$, z.\,B.\ $\{1, 2, 3\} \ni 2$ und $\{1, 2, 3\} \not\ni 4$.
+
+\begin{bemerkung}[\glqq bon mot\grqq{} -- Motivation nach Cantor]
+Eine \emph{Menge} $A$ ist eine Zusammenfassung von wohlunterscheidbaren Objekten unserer Anschauung oder unseres Denkens, die \emph{Elemente} von $A$ genannt werden, zu einem Ganzen.
+\end{bemerkung}
+
+\begin{axiom}[Extensionalitätsaxiom]
+Zwei Mengen $A$ und $B$ sind genau dann gleich, wenn sie dieselben Elemente haben. Kurz:
+\[
+  A = B \iff \forall x: \bigl(x \in A \iff x \in B\bigr).
+\]
+\end{axiom}
+
+\begin{bem}
+Für Mengen $M$ und $x$ ist genau eine der beiden Aussagen $x \in M$, $x \notin M$ wahr, die andere entsprechend falsch.
+\end{bem}
+
+Beim Bilden von \glqq neuartigen\grqq{} Mengen ist äußerste Vorsicht geboten. Eine häufig verwendete Methode liefert das
+
+\begin{axiomohne}[Aussonderungsaxiom]
+Zu jeder Menge $A$ und jeder Bedingung $P(x)$ an eine Menge $x$ gibt es die Menge $B$, deren Elemente genau die Elemente aus $A$ sind, die die Bedingung $P(x)$ erfüllen.
+
+\emph{Schreibweise:} $B = \{\, x \in A \mid P(x) \,\}$.
+\end{axiomohne}
+
+\begin{bsp}
+$\{\, n \in \N \mid \exists k \in \N : n = 2k \,\} = \{2, 4, 6, \dots\}$.
+\end{bsp}
+
+\begin{satzohne}[Russellsche Antinomie]
+Zu jeder Menge $M$ gibt es eine Menge $x$ mit $x \notin M$. Insbesondere ist die Ansammlung aller Mengen so groß, dass sie \emph{keine} Menge bildet.
+\end{satzohne}
+
+\begin{proof}
+Betrachte die \emph{Russell-Menge} (sie existiert nach dem Aussonderungsaxiom)
+\[
+  R(M) = \{\, x \in M \mid x \notin x \,\}.
+\]
+Angenommen, $R(M) \in M$.
+\begin{itemize}
+  \item Ist $R(M) \in R(M)$, so gilt nach Definition von $R(M)$ gerade $R(M) \notin R(M)$.
+  \item Ist $R(M) \notin R(M)$, so erfüllt $R(M) \in M$ die Bedingung, also $R(M) \in R(M)$.
+\end{itemize}
+Beides ist ein Widerspruch. Also ist $R(M) \notin M$. Gäbe es eine Menge aller Mengen, so müsste sie $R(M)$ enthalten -- daher ist die Ansammlung aller Mengen keine Menge.
+\end{proof}
+
+\begin{beispiel}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item \emph{Klassische Zahlbereiche:}
+  \begin{align*}
+    \N   &= \{1, 2, 3, \dots\}, \qquad \N_0 = \{0, 1, 2, 3, \dots\},\\
+    \Z   &= \{\dots, -3, -2, -1, 0, 1, 2, 3, \dots\},\\
+    \Q   &= \left\{ \tfrac{a}{b} \;\middle|\; a, b \in \Z,\ b \neq 0 \right\},
+  \end{align*}
+  $\R$ = reelle Zahlen, also alle Zahlen, die den Punkten auf der reellen Geraden entsprechen. \\
+  (In dieser Vorlesung ist $0 \notin \N$.)
+
+  \item Reihenfolge und Wiederholungen spielen keine Rolle (Extensionalität):
+  \[
+    \{1, 2, 3, 2\} = \{1, 2, 3\} = \left\{ \tfrac{4}{2},\ 5-2,\ (-1)^2 \right\}.
+  \]
+
+  \item Die \emph{leere Menge} $\emptyset = \{\}$ ist eindeutig bestimmt durch die Aussage
+  \[
+    \forall x: x \notin \emptyset.
+  \]
+  Mit ihr lassen sich die natürlichen Zahlen mengentheoretisch konstruieren:
+  \[
+    0 = \emptyset,\quad 1 = \{0\},\quad 2 = \{0, 1\},\quad \dots
+  \]
+
+  \item Die Menge der \emph{Primzahlen}:
+  \[
+    \Pm = \{\, p \in \N \mid p \text{ ist eine Primzahl} \,\} = \{2, 3, 5, 7, 11, 13, 17, \dots\}.
+  \]
+  Dabei gilt definitionsgemäß: $p \in \N$ ist eine Primzahl, falls $p \neq 1$ und gilt: Ist $p = ab$ das Produkt zweier natürlicher Zahlen $a, b$, so folgt $a = p,\ b = 1$ oder $a = 1,\ b = p$. Formal mit dem Aussonderungsaxiom:
+  \[
+    \Pm = \{\, p \in \N \mid p \neq 1 \ \land\ \forall a, b \in \N: \bigl(p = ab \implies (a = 1 \lor b = 1)\bigr) \,\}.
+  \]
+\end{enumerate}
+\end{beispiel}
+
+\begin{bemerkung}[Kernaufgaben der Mathematik]
+\leavevmode
+\begin{enumerate}
+  \item Formuliere interessante Aussagen.
+  \item Verifiziere diese mittels einer schlüssigen Beweisführung: \emph{direkte Beweise}, \emph{Widerspruchsbeweise}, \emph{Induktionsbeweise}.
+\end{enumerate}
+\end{bemerkung}
+
+\begin{satz}[Beispiel für einen direkten Beweis]
+Sei $n \in \N$. Dann gilt
+\[
+  \sum_{i=1}^{n} i = 1 + 2 + \dots + n = \frac{n(n+1)}{2}.
+\]
+\end{satz}
+
+\begin{proof}
+Mit den üblichen Rechenregeln für $\Q$ erhalten wir
+\begin{align*}
+  2 \cdot (1 + 2 + \dots + n)
+  &= \bigl(1 + 2 + \dots + n\bigr) + \bigl(n + (n-1) + \dots + 1\bigr)\\
+  &= \underbrace{(n+1) + (n+1) + \dots + (n+1)}_{n \text{ Summanden}} = n(n+1).
+\end{align*}
+Teilen durch $2$ liefert sofort die Behauptung.
+\end{proof}
+
+\begin{satz}[Euklid -- Beispiel für einen Widerspruchsbeweis]
+Es gibt unendlich viele Primzahlen.
+\end{satz}
+
+\begin{proof}
+Angenommen, die Menge der Primzahlen ist endlich, also $\Pm = \{p_1, p_2, \dots, p_r\}$. Betrachte
+\[
+  n = \prod_{i=1}^{r} p_i + 1.
+\]
+Es ist $n \geq 2$. Wir verwenden den folgenden Sachverhalt, den wir weiter unten begründen:
+
+\smallskip
+\noindent$(*)$ \emph{Ist $n \in \N$ mit $n \geq 2$, so besitzt $n$ einen Primteiler, d.\,h.\ es existiert eine Primzahl $p$ mit $p \mid n$, also $n = p \cdot m$ für ein geeignetes $m \in \N$.}
+\smallskip
+
+Sei also $n = p \cdot m$ mit $p \in \Pm$ und $m \in \N$. Ohne Einschränkung ist $p = p_1$. Dann erhalten wir
+\[
+  p_1 m = n = p_1 \prod_{i=2}^{r} p_i + 1,
+  \qquad\text{also}\qquad
+  p_1 \Bigl(m - \prod_{i=2}^{r} p_i\Bigr) = 1.
+\]
+Damit wäre $p_1 \mid 1$, aber wegen $p_1 \geq 2$ gilt $p_1 \nmid 1$. Widerspruch.
+
+\smallskip
+\emph{Zu $(*)$:} Angenommen, die Aussage ist falsch. Dann existiert ein kleinstes Gegenbeispiel $n \in \N$ mit $n \geq 2$, das keinen Primteiler besitzt. Offenbar ist dann $n \notin \Pm$ (sonst wäre $n$ selbst ein Primteiler), also $n = ab$ mit $a, b \in \N$ und $2 \leq a \leq b \leq n-1$. Nach Wahl von $n$ hat insbesondere $a$ einen Primteiler $p$. Wegen $p \mid a$ und $a \mid n$ gilt dann auch $p \mid n$ -- Widerspruch.
+\end{proof}
+
+\subsection*{Übung: Wahrheitstafeln}
+
+Für Aussagen $\alpha, \beta$ definieren wir die Verknüpfungen durch ihre Wahrheitstafeln:
+\begin{center}
+\begin{tabular}{cc|c|c|c|c}
+$\alpha$ & $\beta$ & $\alpha \land \beta$ & $\alpha \lor \beta$ & $\alpha \implies \beta$ & $\alpha \iff \beta$\\\hline
+w & w & w & w & w & w\\
+w & f & f & w & f & f\\
+f & w & f & w & w & f\\
+f & f & f & f & w & w
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+  \item $\alpha \land \beta$ ist genau dann wahr, wenn $\alpha$ und $\beta$ beide wahr sind.
+  \item $\alpha \lor \beta$ ist genau dann wahr, wenn mindestens eine der beiden Aussagen wahr ist.
+  \item $\alpha \implies \beta$ ist genau dann falsch, wenn $\alpha$ wahr und $\beta$ falsch ist.
+  \item $\alpha \iff \beta$ ist genau dann wahr, wenn $\alpha$ und $\beta$ denselben Wahrheitswert haben.
+\end{itemize}
+
+Zwei Aussagen heißen \emph{äquivalent}, falls sie die gleiche Wahrheitstafel besitzen.
+
+\begin{bsp}
+Die Aussagen $\neg\alpha \lor \neg\beta$ und $\alpha \implies \neg\beta$ sind äquivalent:
+\begin{center}
+\begin{tabular}{cc|cc|c|c}
+$\alpha$ & $\beta$ & $\neg\alpha$ & $\neg\beta$ & $\neg\alpha \lor \neg\beta$ & $\alpha \implies \neg\beta$\\\hline
+w & w & f & f & f & f\\
+w & f & f & w & w & w\\
+f & w & w & f & w & w\\
+f & f & w & w & w & w
+\end{tabular}
+\end{center}
+Beide Aussagen haben die gleiche Wahrheitstafel und sind damit äquivalent.
+\end{bsp}
+
+% ----------------------------------------------------------------------
+\subsection{Elementare Mengenoperationen}
+
+\begin{definition}[Elementare Mengenoperationen]
+Seien $A$ und $B$ Mengen.
+\begin{enumerate}[label=(\alph*)]
+  \item $A$ heißt \emph{Teilmenge} von $B$, bez.\ $A \subseteq B$, falls gilt
+  \[
+    \forall x \in A: x \in B, \qquad\text{d.\,h.}\qquad \forall x: \bigl(x \in A \implies x \in B\bigr).
+  \]
+  $A$ heißt \emph{echte Teilmenge} von $B$, bez.\ $A \subsetneq B$, falls $A \subseteq B$, aber $A \neq B$. Auf Elementebene bedeutet das gerade:
+  \[
+    \forall x: \bigl(x \in A \implies x \in B\bigr) \quad\text{und}\quad \exists b \in B: b \notin A.
+  \]
+  \item Die \emph{Differenz} von $A$ und $B$ ist $A \setminus B = \{\, a \in A \mid a \notin B \,\}$.
+  \item Die \emph{Potenzmenge} von $A$ ist $\Pot(A) = \{\, X \mid X \subseteq A \,\}$. Stets gilt $\emptyset \in \Pot(A)$ und $A \in \Pot(A)$.
+  \item Die \emph{Vereinigung} von $A$ und $B$ ist $A \cup B = \{\, x \mid x \in A \lor x \in B \,\}$, \\
+        der \emph{Schnitt} von $A$ und $B$ ist $A \cap B = \{\, x \mid x \in A \land x \in B \,\}$.
+  \item Allgemeiner betrachten wir für eine beliebige Menge $\mathcal{A}$ von Mengen die \emph{große Vereinigung}
+  \[
+    \bigcup \mathcal{A} = \{\, x \mid \exists A \in \mathcal{A}: x \in A \,\}.
+  \]
+  In der Praxis ist häufig $\mathcal{A} = \{\, A_i \mid i \in I \,\}$ für eine \emph{Indexmenge} $I$, z.\,B.\ $I = \N$, und wir schreiben dann $\bigcup_{i \in I} A_i$.
+  \item Ähnlich ist für $\mathcal{A} \neq \emptyset$ der \emph{große Schnitt}
+  \[
+    \bigcap \mathcal{A} = \bigcap_{A \in \mathcal{A}} A = \{\, x \mid \forall A \in \mathcal{A}: x \in A \,\}.
+  \]
+\end{enumerate}
+\end{definition}
+
+\begin{bem}
+\leavevmode
+\begin{itemize}
+  \item $A = B$ ist gleichbedeutend mit $A \subseteq B \land B \subseteq A$.
+  \item Es gilt $\Pm \subsetneq \N \subsetneq \Z \subsetneq \Q \subsetneq \R$.
+\end{itemize}
+\end{bem}
+
+\begin{beispiel}
+\leavevmode
+\begin{enumerate}
+  \item \emph{Cantor-Menge.} Setze
+  \[
+    C_1 = [0, 1], \qquad C_2 = \left[0, \tfrac13\right] \cup \left[\tfrac23, 1\right], \qquad
+    C_n = \tfrac13 C_{n-1} \ \cup\ \left(\tfrac23 + \tfrac13 C_{n-1}\right).
+  \]
+  Man erhält eine absteigende Folge $C_1 \supsetneq C_2 \supsetneq C_3 \supsetneq \dots$ und definiert
+  \[
+    C = \bigcap_{n \in \N} C_n \subseteq [0, 1] \subseteq \R.
+  \]
+
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=10cm,y=1cm]
+    \foreach \n in {1,...,5} {
+      \node[left] at (0,-0.7*\n) {$C_{\n}$};
+    }
+    \draw[line width=2.5pt] (0,-0.7) -- (1,-0.7);
+    \foreach \a/\b in {0/1, 2/3} {
+      \draw[line width=2.5pt] ({\a/3},-1.4) -- ({\b/3},-1.4);
+    }
+    \foreach \a in {0,2,6,8} {
+      \draw[line width=2.5pt] ({\a/9},-2.1) -- ({(\a+1)/9},-2.1);
+    }
+    \foreach \a in {0,2,6,8,18,20,24,26} {
+      \draw[line width=2.5pt] ({\a/27},-2.8) -- ({(\a+1)/27},-2.8);
+    }
+    \foreach \a in {0,2,6,8,18,20,24,26,54,56,60,62,72,74,78,80} {
+      \draw[line width=2.5pt] ({\a/81},-3.5) -- ({(\a+1)/81},-3.5);
+    }
+    \node[below] at (0,-3.6) {$0$};
+    \node[below] at (1,-3.6) {$1$};
+  \end{tikzpicture}
+  \caption{Die ersten Schritte der Konstruktion der Cantor-Menge}
+  \end{figure}
+
+  \emph{Frage:} Wie groß ist die Cantor-Menge $C$? \\
+  Die Hausdorff-Dimension von $C$ ist $\dfrac{\log 2}{\log 3} \approx 0{,}63$.
+
+  \item $\Pot(A)$ hat stets (deutlich) mehr Elemente als $A$ selbst [Satz von Cantor, siehe §3]. Für $A = \{1, 2, 3\}$ ist
+  \[
+    \Pot(A) = \bigl\{ \emptyset, \{1\}, \{2\}, \{3\}, \{1, 2\}, \{1, 3\}, \{2, 3\}, \{1, 2, 3\} \bigr\},
+  \]
+  also $|\Pot(A)| = 2^3 = 8$, während $|A| = 3$.
+\end{enumerate}
+\end{beispiel}
+
+\begin{lemma}
+Sei $M$ eine Menge und seien $A, B, C \subseteq M$. Dann gilt:
+\begin{enumerate}[label=(\alph*)]
+  \item $A \cup B = B \cup A$ \ und \ $A \cap B = B \cap A$ \hfill (Kommutativität)
+  \item $A \cup (B \cup C) = (A \cup B) \cup C$ \ und \ $A \cap (B \cap C) = (A \cap B) \cap C$ \hfill (Assoziativität)
+  \item $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ \ und \ $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ \hfill (Distributivität)
+  \item $M \setminus (A \cup B) = (M \setminus A) \cap (M \setminus B)$ \ und \ $M \setminus (A \cap B) = (M \setminus A) \cup (M \setminus B)$ \hfill (de Morgansche Regeln)
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Die Teile (a), (b), (c) lassen sich \glqq leicht\grqq{} nachprüfen (z.\,B.\ mithilfe einer Wahrheitstafel). Wir beweisen den schwierigsten Teil (d).
+
+Zunächst zeigen wir
+\[
+  (*) \qquad M \setminus (A \cup B) = (M \setminus A) \cap (M \setminus B).
+\]
+Dies lässt sich mit einem Venn-Diagramm veranschaulichen:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8]
+  \def\rect{(-2.2,-1.6) rectangle (2.2,1.8)}
+  \def\circA{(-0.55,0.25) circle (1)}
+  \def\circB{(0.55,-0.15) circle (1)}
+  % links: M \ A und M \ B
+  \begin{scope}
+    \fill[pattern=north east lines] \rect;
+    \fill[white] \circA;
+  \end{scope}
+  \begin{scope}
+    \begin{scope}[even odd rule]
+      \clip \rect \circB;
+      \fill[pattern=north west lines] \rect;
+    \end{scope}
+  \end{scope}
+  \draw \rect; \draw \circA; \draw \circB;
+  \node at (-0.85,0.45) {$A$};
+  \node at (0.85,-0.35) {$B$};
+  \node[above right] at (2.2,1.8) {$M$};
+  \node[below] at (0,-1.7) {$(M \setminus A) \cap (M \setminus B)$: doppelt schraffiert};
+
+  % rechts: M \ (A u B)
+  \begin{scope}[xshift=6cm]
+    \fill[gray!35] \rect;
+    \fill[white] \circA;
+    \fill[white] \circB;
+    \draw \rect; \draw \circA; \draw \circB;
+    \node at (-0.85,0.45) {$A$};
+    \node at (0.85,-0.35) {$B$};
+    \node[above right] at (2.2,1.8) {$M$};
+    \node[below] at (0,-1.7) {$M \setminus (A \cup B)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Veranschaulichung der de Morganschen Regel $(*)$}
+\end{figure}
+
+\glqq$\subseteq$\grqq: Sei $x \in M \setminus (A \cup B)$. Dann ist $x \in M$ und $x \notin A \cup B$, also $x \in M$ und $x \notin A$ und $x \notin B$. Also ist $x \in M \setminus A$ und $x \in M \setminus B$, d.\,h.\ $x \in (M \setminus A) \cap (M \setminus B)$.
+
+\glqq$\supseteq$\grqq: Sei nun $x \in (M \setminus A) \cap (M \setminus B)$. Dann ist $x \in M$, $x \notin A$ und $x \notin B$. Also ist $x$ weder in $A$ noch in $B$, d.\,h.\ $x \notin A \cup B$, und damit $x \in M \setminus (A \cup B)$.
+
+Damit ist $(*)$ bewiesen. Die zweite Aussage lässt sich direkt auf $(*)$ zurückführen. Dazu schreiben wir
+\[
+  \overline{C} = M \setminus C
+\]
+für das \emph{Komplement} von $C \subseteq M$ in $M$ und beobachten $\overline{\overline{C}} = C$. Wenden wir $(*)$ auf $\overline{A}$ und $\overline{B}$ anstelle von $A$ und $B$ an, so erhalten wir
+\[
+  \overline{\overline{A} \cup \overline{B}} = \overline{\overline{A}} \cap \overline{\overline{B}} = A \cap B.
+\]
+Bildet man auf beiden Seiten das Komplement, folgt
+\[
+  M \setminus (A \cap B) = \overline{A \cap B} = \overline{A} \cup \overline{B} = (M \setminus A) \cup (M \setminus B). \qedhere
+\]
+\end{proof}
+
+% ----------------------------------------------------------------------
+\subsection{Kartesisches Produkt}
+
+\begin{definition}
+Seien $A$ und $B$ Mengen. Das \emph{kartesische Produkt} von $A$ und $B$ ist
+\[
+  A \times B = \{\, (a, b) \mid a \in A,\ b \in B \,\},
+\]
+die Menge aller \emph{geordneten Paare} $(a, b)$ mit $a \in A$ und $b \in B$. Diese werden mengentheoretisch so gebildet, dass für alle $x, y, \tilde{x}, \tilde{y}$ gilt:
+\[
+  (x, y) = (\tilde{x}, \tilde{y}) \iff x = \tilde{x} \ \land\ y = \tilde{y}.
+\]
+Zum Beispiel kann man $(x, y) = \bigl\{ \{x\}, \{x, y\} \bigr\}$ setzen (Kuratowski).
+\end{definition}
+
+\begin{bsp}
+$\R \times \R = \R^2$ ist die Koordinatenebene:
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8,>=stealth]
+  \draw[->] (-0.5,0) -- (5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3.5) node[above] {$y$};
+  \fill (3,2) circle (2pt) node[above right] {$(a, b)$};
+  \draw[dashed] (3,0) node[below] {$a$} -- (3,2) -- (0,2) node[left] {$b$};
+\end{tikzpicture}
+\caption{$\R \times \R$}
+\end{figure}
+\end{bsp}
+
+\end{document}

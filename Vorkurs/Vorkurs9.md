@@ -9,3 +9,6 @@ Bem 14 (Satz von Banach Tarski 1924) Mann kann einen Ball (d.h. eine Vollkugel) 
 Das Auswahlaxiom wird schon im 1. Sem. in der Analysis 1 5x und in der Linearen Algebra 1 1x eingesetzt. Das Auswahlaxiom wird oft in der Äquivalenten Gestalt des "Zornschen Lemmas" und des "Wohlordnungssatzes" verwendet. 
 
 Das 'C' in ZFC steht für "Axiom of choice",  es gibt noch 2 weitere Axiome in ZFC, die aber fast nur in speziellen Mengenlehre- Vorlesungen verwendet werden: das Fundierungsaxiom und das Ersetzungsaxiom
+^
+
+

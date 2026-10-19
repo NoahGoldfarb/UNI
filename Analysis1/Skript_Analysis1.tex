@@ -1,0 +1,113 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=red,citecolor=red,urlcolor=red]{hyperref}
+
+% --- Umgebungen (Stil des Kurzskripts: fettes Label, kursiver Text) ---------
+\newtheoremstyle{kurzskript}%
+  {\medskipamount}{\medskipamount}% Abstand oben / unten
+  {\itshape}{}%                      Textschrift, Einzug
+  {\bfseries}{}{ }%                  Labelschrift, Punkt, Abstand
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ \bfseries(#3)}}
+\theoremstyle{kurzskript}
+\newtheorem{satz}{Satz}[section]             % Nummerierung 1.1, 1.2, ...
+\newtheorem{definition}[satz]{Definition}
+\newtheorem{lemma}[satz]{Lemma}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{beispiel}[satz]{Beispiel}
+\newtheorem*{bsp}{Beispiel}
+\newtheorem*{bem}{Bemerkung}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par\pushQED{\qed}%
+  \normalfont\topsep\medskipamount\relax
+  \trivlist\item[\hskip\labelsep\bfseries #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\proofname}{Beweis}
+\renewcommand{\qedsymbol}{$\square$}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\title{Analysis 1}
+\author{Mitschrift}
+\date{Wintersemester 2026/27}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ======================================================================
+% Kapitel 1
+% ======================================================================
+\section{Reelle und komplexe Zahlen}
+
+\subsection{Mengen und Abbildungen}
+
+Die Mengenlehre wird in dieser Vorlesung nicht axiomatisch konstruiert, sondern nur beschrieben. Für präzise Details (wie im Vorkurs) siehe die Literatur auf der Vorkurs-Webseite.
+
+\begin{definition}[Naive Definition einer Menge, Cantor 1874]
+Eine \emph{Menge} ist eine Zusammenfassung bestimmter, wohlunterschiedener Objekte unserer Anschauung oder unseres Denkens -- welche die \emph{Elemente} der Menge genannt werden -- zu einem Ganzen.
+\end{definition}
+
+\begin{beispiel}
+\leavevmode
+\begin{itemize}
+  \item $M = \{2, 4, \pi, e\}$.
+  \item $\N = \{0, 1, 2, 3, 4, \dots\}$ ist die Menge der \emph{natürlichen Zahlen}. \\
+        (In dieser Vorlesung gehört die $0$ zu $\N$.)
+  \item $\Z = \{\dots, -3, -2, -1, 0, 1, 2, 3, \dots\}$ ist die Menge der \emph{ganzen Zahlen}.
+  \item $\Q = \left\{\tfrac{a}{b} \;\middle|\; a, b \in \Z,\ b \neq 0\right\}$ ist die Menge der \emph{rationalen Zahlen}, \\
+        z.\,B.\ $1, -1, \tfrac12, -\tfrac12, \tfrac13, \tfrac23, \tfrac43 \in \Q$.
+\end{itemize}
+\end{beispiel}
+
+\begin{bem}
+Die Konstruktion dieser Zahlbereiche und der Rechenoperationen ($+,\ -,\ \cdot,\ :$) wird in dieser Vorlesung ohne Beweis vorausgesetzt und im 4.~Semester nachgeholt.
+\end{bem}
+
+\begin{bem}
+Die obige naive Definition ist sehr schwammig. Viel schlimmer: Sie widerspricht sich selbst (Russellsche Antinomie, siehe Lineare Algebra~1 bzw.\ Vorkurs).
+
+Nach Definition~1.1 wird eine Menge eindeutig durch die Elemente charakterisiert, die sie enthält. Z.\,B.\ wird die Menge $M = \{5, 7, 11\}$ eindeutig dadurch bestimmt, dass
+\[
+  5 \in M,\quad 7 \in M,\quad 11 \in M
+\]
+gilt und für alle anderen Objekte $x$ gilt: $x \notin M$.
+\end{bem}
+
+\begin{definition}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Die \emph{leere Menge} $\emptyset$ sei diejenige Menge, die kein Element enthält, d.\,h.\ für alle Objekte $x$ gilt $x \notin \emptyset$.
+  \item Eine Menge $N$ heißt \emph{Teilmenge} einer Menge $M$, geschrieben $N \subseteq M$, falls jedes Element von $N$ auch Element von $M$ ist.
+\end{enumerate}
+\end{definition}
+
+\begin{bsp}
+$\{2, 4, 6\} \subseteq \{1, 2, 3, 4, 5, 6, 7\}$. Insbesondere ist $\emptyset \subseteq M$ für jede Menge $M$.
+\end{bsp}
+
+\paragraph{Notation.}
+Teilmengen, die durch eine Bedingung beschrieben werden, notiert man in der Form
+\[
+  \{0, 1, 2, 3\} = \{\, n \in \N \mid n \leq 3 \,\},
+\]
+wobei \glqq$\mid$\grqq{} als \glqq mit\grqq{} oder \glqq für die gilt\grqq{} gelesen wird. Ein weiteres Beispiel:
+\[
+  \{4, 5, 6, 7\} = \{\, n \in \N \mid n > 3 \text{ und } n \leq 7 \,\}.
+\]
+
+\end{document}

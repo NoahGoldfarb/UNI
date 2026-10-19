@@ -29,7 +29,6 @@ In einem Venn Diagram werden n Mengen durch n berandende Kurven Dargestellt. In 
 ***Venn Diagram für n = 2 und n = 3***
 
 Lemma 6:(einige Eigenschaften von $\cup$ und $\cap $) für Mengen A, B , C
-
 1.: $A \cup  A = A, A\cap A = A$ Idempotenz,
 2.: $A \cup B = B\cup A$, $A \cap B = B\cap A$ Kommutativgesetz
 

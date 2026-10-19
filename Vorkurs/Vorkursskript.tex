@@ -1,0 +1,532 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage[colorlinks=true,linkcolor=red,citecolor=red,urlcolor=red]{hyperref}
+
+% --- Umgebungen (Stil des Kurzskripts: fettes Label, kursiver Text) ---------
+\makeatletter
+\newtheoremstyle{kurzskript}%
+  {\medskipamount}{\medskipamount}% Abstand oben / unten
+  {\itshape}{}%                      Textschrift, Einzug
+  {\bfseries}{}{ }%                  Labelschrift, Punkt, Abstand
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ \bfseries(#3)}}
+\makeatother
+\theoremstyle{kurzskript}
+\newtheorem{satz}{Satz}                      % gemeinsamer Zähler (manuell gesetzt)
+\newtheorem{definition}[satz]{Definition}
+\newtheorem{lemma}[satz]{Lemma}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+\newtheorem{axiom}{Axiom}
+\newtheorem*{lemmaohne}{Lemma}
+\newtheorem*{definitionohne}{Definition}
+\newtheorem*{bsp}{Beispiel}
+\newtheorem*{bem}{Bemerkung}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par\pushQED{\qed}%
+  \normalfont\topsep\medskipamount\relax
+  \trivlist\item[\hskip\labelsep\bfseries #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\proofname}{Beweis}
+\renewcommand{\qedsymbol}{$\square$}
+
+\title{Vorkurs}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ======================================================================
+% Vorkurs 1
+% ======================================================================
+\section{Aussagenlogik}
+{\small nur beschreibend, noch nicht wirklich met.}
+
+\setcounter{satz}{0}
+\begin{definition}
+Eine Aussage ist eine Zeichenkette, der ein Wahrheitswert (Wahr oder Falsch) zugeordnet werden kann.
+\end{definition}
+
+\begin{bsp}
+$1+1 = 5$ ist eine Aussage (f).\\
+$1>x$ ist ohne weitere Informationen über $x$ keine Aussage.\\
+\glqq 3 ist Teiler von 9\grqq{} ist eine Aussage (w).\\
+Die Aussage \glqq jede gerade Zahl, die größer als 2 ist, ist Summe zweier Primzahlen\grqq{} ist eine Aussage, aber ob wahr oder falsch ist noch nicht bekannt (Goldbachsche Vermutung).
+\end{bsp}
+
+\subsection{Symbolik für Rechnen mit Aussagen}
+Für Aussagen $A$ und $B$ sei: $\neg A$ (\glqq Nicht A\grqq, \glqq A gilt nicht\grqq) genau dann wahr, wenn $A$ falsch ist. Beispiel: Mit $A = \text{'}1+2=5\text{'}$ ist $\neg A = \text{\glqq}1+2 \neq 5\text{\grqq}$ eine wahre Aussage. $A \wedge B$ ist genau dann wahr, wenn $A$ und $B$ wahr sind.
+
+Bsp: \glqq$1+2 = 5$\grqq{} $\wedge$ \glqq 3 ist Teiler von 9\grqq{} ist eine falsche Aussage, da eine der beiden Aussagen falsch ist. \glqq$A\land B$\grqq{} stellt die Aussage $A$ oder $B$ dar. $A$ oder $B$ sei genau dann wahr, wenn $A$ oder $B$ oder beide wahr sind. Bsp: $A = \text{\glqq}1+2 \neq 5\text{\grqq}$, $B = \text{\glqq}$3 ist Teiler von 9\grqq{}; $A \land B$ ist hier eine wahre Aussage. Aussagenlogik ist von Chrysippos von Soloi (281--208 v.\,Chr.)
+
+\subsection{Wahrheitstafeln}
+\begin{center}
+\begin{tabular}{c|c}
+$A$ & $\neg A$\\\hline
+f & w\\
+w & f
+\end{tabular}
+\qquad\qquad
+\begin{tabular}{cc|c|c}
+$A$ & $B$ & $A \wedge B$ & $A \lor B$\\\hline
+f & f & f & f\\
+f & w & f & w\\
+w & f & f & w\\
+w & w & w & w
+\end{tabular}
+\end{center}
+
+\glqq$A \implies B = A \wedge B \lor B$\grqq{} nur dann falsch, wenn $A$ wahr und $B$ falsch.
+
+Unter allen Bedeutungen, die \glqq wenn dann\grqq{} in der Umgangssprache hat, ist die gemeint, die als \glqq Insbesondere wenn $A$ gilt, dann gilt $B$\grqq{} geschrieben werden kann. Hier ist $\text{'}A \implies B\text{'}$ genau dann falsch, wenn $A$ wahr und $B$ falsch ist.
+
+Bsp: 'Falls Anne jetzt in Aachen ist, dann besucht sie Bert.' Diese Aussage ist nur dann falsch, wenn Anne in Aachen ist, aber Bert nicht besucht. Hier ist wichtig anzumerken, dass diese Aussage nicht symmetrisch ist. Ein inhaltlicher Bezug muss hier nicht notwendigerweise vorhanden sein. \glqq$1+1 = 3 \implies$ \glqq Paris liegt in England\grqq\grqq{} Diese Aussage ist wahr. \glqq Es regnet $\implies$ die Straße ist nass\grqq
+
+Seien $A$ und $B$ zwei Aussagen.
+\begin{center}
+\begin{tabular}{cc|cc|c|c|c}
+$A$ & $B$ & $\neg A$ & $\neg B$ & $\neg B \implies A$ & $\neg A \implies B$ & $\land A \lor B$\\\hline
+f & f & w & w & w & w & w\\
+f & w & w & f & f & w & w\\
+w & f & f & w & w & f & f\\
+w & w & f & f & w & w & w
+\end{tabular}
+\end{center}
+
+Also ist $\neg B \implies \neg A$ gleichbedeutend zu $A \implies B$ und zu $\neg A \land B$; diese Formeln sind nicht äquivalent zu $B \implies A$.
+
+$A \iff B$ hat die folgende Wahrheitstabelle:
+\begin{center}
+\begin{tabular}{cc|c}
+$A$ & $B$ & $A \iff B$\\\hline
+w & w & w\\
+w & f & f\\
+f & w & f\\
+f & f & w
+\end{tabular}
+\end{center}
+
+Beispiel für logische Schlussformen:\\
+$A \lor \neg A$ ist wahr, $A \implies A$ sind wahr.\\
+Genauso beweist man mit Wahrheitstafeln: $(a \land (A \implies B)) \implies B$,\\
+$\neg B \land (A \implies B) \implies \neg A$, $(A \implies B) \land (B \implies C) \implies (A \implies C)$. Diese Schlussformen lassen sich mithilfe von Wahrheitstafeln überprüfen.
+
+Beispiel für einen mathematischen Beweis:\\
+Es gibt unendlich viele Primzahlen. Verwendet wird: $A \implies \neg A \implies \neg A$. Angenommen, es gibt nur endlich viele Primzahlen. Euklid 320 v.\,Chr., 9.~Buch der Elemente. Es gibt mindestens eine Primzahl, z.\,B.~2. Angenommen, es gäbe \glqq nur endlich viele Primzahlen\grqq{} ($A$). Dann hat $q = p_1 \cdot p_2 \cdot p_3 \cdot ... \cdot p_n +1$ diese Zahl ist nicht durch irgendeine dieser Primzahlen teilbar, da dieses Teilen Rest 1 liefert, und 1 keine Primzahl ist. Also hat $q$ keinen kleineren Primteiler, also ist also selber
+
+% ======================================================================
+% Vorkurs 2
+% ======================================================================
+\section{Prädikatenlogik (Frege 1879)}
+Ein Prädikat ist eine Aussage, die vom Wert einer Variable abhängt, d.\,h. die einen Platzhalter hat.
+
+Bsp: $A(x)$: $x>2$
+
+\begin{definitionohne}
+$\forall$ : $A(x)$ für alle $x$ gilt die Aussage $A(x)$ (Allquantor)
+\end{definitionohne}
+Bsp: $\forall x: (x \in R \land x > 1)\implies x^2 >1$.
+
+\begin{definitionohne}
+$\exists x : A(x)$ heißt: Es gibt ein $x$, es existiert ein $x$, für das $A(x)$ gilt.
+\end{definitionohne}
+Bsp: $\exists x : (x \in R \land x^2 = 2)$
+
+$\neg \exists x : A(x)$ ist äquivalent zu $\forall x: \neg A(x)$\\
+$\neg (\forall x:A(x))$ ist äquivalent zu: $\exists x: \neg A(x)$. Es stimmt nicht, dass für alle $x$ $A(x)$ wahr ist. Ist äquivalent zu: Es existiert ein $x$, für das $A(x)$ falsch ist.
+
+Beispiel: $\neg \exists x \in Q \land x^2 = 2$ ist äquivalent zu $\forall x: \neg x\in Q \land x^2 = 2$ bzw. zu $\forall X: x \notin \lor x^2 \neq 2$. Hier wurde $\neg (A \land B) = \neg A \lor \neg B$ verwendet.
+
+\begin{bem}
+Die math.\ Konstruktion einer Logik ist komplizierter, z.\,B.\ muss man den Zusammenhang zwischen der konstruierten (innere Logik) und der Logik, die für die Argumente verwendet wird (äußere Logik), genauer berücksichtigen.
+\end{bem}
+
+% ======================================================================
+% Vorkurs 3
+% ======================================================================
+\section{ZFC-Mengenlehre (1930 Zermelo-Fraenkel)}
+Ziel: jedes mathematische Objekt soll als Menge geschrieben werden, z.\,B.\ $N = \{0, 1, 2, 3 ...\}$, $Q = \{0, 1, -1, \frac{1}{2}...\}$, $\pi$, $\sin(x)$, Geraden, Kreise, \dots
+
+\begin{definitionohne}[Menge, Georg Cantor (1874) (naiv)]
+Eine Menge ist eine Zusammenfassung bestimmter, wohlunterschiedener Objekte unserer Anschauung oder unseres Denkens -- welche die Elemente der Menge genannt werden -- zu einem Ganzen.
+\end{definitionohne}
+$a \in M$ heißt \glqq A ist Element von M\grqq, $A \notin M$ ist die Negation davon. Die Schreibweise für eine Menge mit Elementen: $\{2, 3, \text{Katze}, \text{Hund}\}$. Dabei kommt es auf die Reihenfolge und Wiederholungen nicht an, da die Elementrelation entscheidend ist: $\{1, 1, 2\} = \{2, 1\} = \{1, 2\}$, da dies die Menge $M$ ist, für die $1 \in m \land 2\in m$. Viele der Begriffe dieser Definition sind nicht definiert.
+
+Probleme: Diese Definition ist sehr schwammig. Diese Definition ist in sich widersprüchlich.
+
+\paragraph{Russellsche Antinomie 1903:}
+Sei $M := \{N:\text{N Menge} \mid N\notin N\}$ Menge aller Mengen $N$, die nicht Element von sich selbst sind. Dann folgt: aus $M \in M$, dass $M \notin M$. Und aus $M \notin M$ folgt, dass $M \in M$. Der Barbier von Sevilla rasiert alle Männer, die sich nicht selber rasieren. Rasiert er sich? Wenn er sich selber rasiert, gehört er nicht zu den Männern, die sich nicht selbst rasieren.
+
+Ab dieser Stelle nimmt der Vorkurs die Genauigkeit einer Mathematikvorlesung an. Anstelle von Cantors Definition verwendet man eine axiomatische Definition. Die Axiome sind dabei als Regeln zu verstehen, wie Zeichenketten umgeformt werden dürfen. \glqq Mengen\grqq{} entsprechen Symbolen an bestimmten Stellen in diesen Zeichenketten.
+
+\begin{axiom}[Extensionalitätsaxiom]
+Angenommen $M$ und $N$ sind Mengen. Dann ist $M = N \iff \forall a: a \in M \iff a \in N$.
+\end{axiom}
+Wir kennen an dieser Stelle noch keine einzige Menge, aber als anschauliches Beispiel kann man $M = \{1, 1\ 2\}$ und $N = \{2, 1\}$.
+
+\setcounter{satz}{2}
+\begin{definition}
+Eine Menge $N$ heißt Teilmenge von $M$, geschrieben $N \subseteq M$, falls $\forall a: a \in N \implies a \in M$.
+\end{definition}
+Im anschaulichen Beispiel vorher ist z.\,B.\ $\{1\} \subseteq \{1, 1, 2\}$, da $1 \in \{1, 1, 2\}$.
+
+\begin{axiom}[Aussonderungsaxiom]
+Zu jeder Menge $M$ und jedem Prädikat $A(.)$ gibt es eine Teilmenge $N \subseteq M$ von denjenigen Elementen von $M$, für die $A$ gilt. Schreibweise: $N = \{x \in M \mid A(x) \}$
+\end{axiom}
+
+Als anschauliches Beispiel ist mit $\{1, 2, 3, 4, 5\}$ etwa $N = \{x \in M \mid x \text{ ist gerade}\} = \{2, 4\}$.\\
+Bsp: $\{a \in M \mid \text{wahr}\} = M \subseteq M$
+
+\begin{definition}
+Differenzmenge zwischen 2 Mengen $M$, $N$ sei $M \setminus N = \{a \in M \mid a \notin N\}$.
+\end{definition}
+
+Anschauliches Beispiel: $\{1, 2, 3, 4, 5\} \setminus \{-1, 0, 1\} = \{2, 3, 4, 5\}$
+
+\begin{axiom}[Existenz der leeren Menge]
+Es gibt eine Menge $\emptyset$, die keine Elemente enthält, d.\,h.\ $\forall a: a \notin \emptyset$.
+\end{axiom}
+
+% ======================================================================
+% Vorkurs 4
+% ======================================================================
+\begin{axiom}[Vereinigungsaxiom]
+Zu jeder Menge $M$ von Mengen existiert eine Menge, die aus denjenigen Elementen besteht, die in mindestens einer der Mengen in $M$ enthalten sind:
+
+$\cup_{N\in M} := \{a\mid \text{ es existiert ein N} \in \text{M mit a} \in N\}$\\
+$\cup_{N\in M}$ ist die \glqq Vereinigung von $N$ über alle $N\in M$\grqq.
+\end{axiom}
+
+Anschauliches Beispiel: für $M = \{\{1, 2, 3\}, \{5, 7, 8\}, \{10\}\}$ ist $\cup_{N\in M} = \{1, 2, 3, 5, 7, 8, 10\}$.
+
+\setcounter{satz}{4}
+\begin{lemma}
+Zu jeder Menge $M$ von Mengen existiert eine Menge, die aus den Elementen besteht, die in jeder der Mengen in $M$ enthalten sind. $\cap _ {N \in M} N = \{a \in \cup _{N \in M} \mid \text{ für alle } N \in M \text{ ist } a \in M\}$ den Durchschnitt.
+\end{lemma}
+
+\begin{proof}
+Nach dem Vereinigungsaxiom (Axiom 4) ist $\cup _{N\in M }$ eine Menge, und nach dem Aussonderungsaxiom (Axiom 2) ist $\cap _ {N \in M} N = \{a \in \cup _{N \in M} \mid \text{ für alle } N \in M \text{ ist } a \in M\}$ wieder eine Menge.
+\end{proof}
+
+Anschauliches Beispiel zum Durchschnitt: Für $M = \{\{1, 2, 3\}, \{1, 5, 3\}, \{1, 9\}\}$ ist $\cap_{N \in M} = \{1\}$.
+
+\begin{axiom}[Paarmengenaxiom]
+Zu zwei Mengen $M$ und $N$ ist auch $\{M, N\}$ eine Menge. Hierbei ist $\{M, N\}$ eine Menge mit 2 Elementen.
+\end{axiom}
+
+\begin{bsp}[(Erstes echtes Beispiel) Axiom 5]
+Mit dem 5.~Axiom können wir zum ersten Mal andere Mengen als die leere Menge konstruieren: $\{\emptyset, \emptyset\} = \{\emptyset\}$, $\{\emptyset, \{\emptyset \}\}, \{\{\emptyset \}, \{\emptyset, \{\emptyset \}\}\}$
+\end{bsp}
+
+Allerdings sind alle so konstruierten Mengen endlich. Mit dem Vereinigungsaxiom folgt aus dem Paarmengenaxiom, dass zu Elementen $a_1, ..., a_n \in M$ eine endliche Menge $\{a_1, ..., a_n\}$ existiert.
+
+$\cup_{N\in \{\{a_1, a_1\}, \{a_2, a_3\}\}} = \{a_1, a_2, a_3\}$, wobei $\{a_1, a_1\}$ und $\{a_2, a_3\}$ wieder durch Paarung entstehen.
+
+Mit dem Paarmengenaxiom existiert auch die Vereinigung $A \cup B$ zweier Mengen $A$, $B$, definiert als $A \cup B = \{a \mid a\in A \lor a\in B\} = \cup_{N\in \{A, B\}} N$, wobei $\{A, B\}$ durch das Paarungsaxiom entsteht, und der Durchschnitt $A \cap B = \{a\mid a\in A \land a \in B\}$. Die Sprechweise hierfür ist jeweils \glqq $A$ vereinigt $B$\grqq{} und \glqq $A$ geschnitten $B$\grqq. Anschauliches Beispiel: $\{1, 5\} \cup \{1, 2, 3\} = \{1, 2, 3, 5\}$, $\{1, 5\}\cap \{1, 2, 3\} = \{1\}$.
+
+\paragraph{Venn-Diagramme:}
+In einem Venn-Diagramm werden $n$ Mengen durch $n$ berandende Kurven dargestellt. In dem Diagramm muss jede der Möglichkeiten für Enthalten-/Nicht-Enthaltensein von Elementen dieser $n$ Mengen vorkommen. Für 2 Mengen muss es so Regionen im Venn-Diagramm für $2^2$ Möglichkeiten des Enthalten-/Nicht-Enthaltenseins in jeder Menge geben. Für jedes $n$ gibt es ein solches Venn-Diagramm.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \draw (-1.4,-1.5) rectangle (2.6,1.5);
+  \draw (0,0) circle (1);
+  \draw (1.2,0) circle (1);
+  \node at (-0.55,0.85) {$A$};
+  \node at (1.75,0.85) {$B$};
+\end{tikzpicture}
+\qquad\qquad
+\begin{tikzpicture}
+  \draw (-1.4,-2.5) rectangle (2.7,1.5);
+  \draw (0,0) circle (1);
+  \draw (1.3,0) circle (1);
+  \draw (0.65,-1.1) circle (1);
+  \node at (-0.6,0.8) {$A$};
+  \node at (1.9,0.8) {$B$};
+  \node at (0.65,-2.1) {$C$};
+\end{tikzpicture}
+\caption{Venn-Diagramm für $n = 2$ und $n = 3$}
+\end{figure}
+
+\begin{lemma}[einige Eigenschaften von $\cup$ und $\cap $]
+für Mengen $A$, $B$, $C$
+
+\begin{enumerate}
+\item[1.:] $A \cup A = A$, $A\cap A = A$ \hfill Idempotenz,
+\item[2.:] $A \cup B = B\cup A$, $A \cap B = B\cap A$ \hfill Kommutativgesetz
+\end{enumerate}
+\end{lemma}
+
+% ======================================================================
+% Vorkurs 5
+% ======================================================================
+\setcounter{satz}{5}
+\begin{lemma}[einige Eigenschaften von $\cup$ und $\cap $]
+für Mengen $A$, $B$, $C$
+
+\begin{enumerate}
+\item[1.:] $A \cup A = A$, $A\cap A = A$ \hfill Idempotenz,
+\item[2.:] $A \cup B = B\cup A$, $A \cap B = B\cap A$ \hfill Kommutativgesetz,
+\item[3.:] $A\cup (B\cup C) = (A\cup B)\cup C$ und $A\cap (B\cap C) = (A\cap B)\cap C$ \hfill Assoziativgesetz
+\item[4.:] $A\cap (B\cup C) = (A\cap B) \cup (A \cap C)$ und $A\cup (B\cap C) = (A\cup B) \cap (A \cup C)$ \hfill Distributivgesetz
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Exemplarisch für $A\cap (B\cup C) = (A\cap B) \cup (A \cap C)$: Nach den Def.\ von $\cap$, $\cup$ ist $A\cap (B\cup C) = \{a\in A \mid a\in B \cup C\} = \{a\mid a\in A \land (a\in B \land a\in C)\}$\\
+$(A\cap B)\cup (A\cap C) =\{ a \mid a\in A \cap B \lor a\in A \cap C \} = \{a\mid (a\in A \land a \in B) \lor (a\in A \land A \in C)\}$.
+
+Zu zeigen bleibt für die drei vorherigen Aussagen $A^*$, $B^*$ und $C^*$ \glqq Element liegt in .\grqq: $A^* \land (B^* \lor C^*) = (A^*\land B^* )\lor (A^*\land C^* )$. Dies lässt sich mit einer Wahrheitstafel überprüfen.
+
+\begin{figure}[H]
+\centering
+\small
+\begin{tabular}{ccc|c|c|c|c|c}
+$A^*$ & $B^*$ & $C^*$ & $B^* \lor C^*$ & $A^* \land (B^* \lor C^*)$ & $A^*\land B^*$ & $A^*\land C^*$ & $(A^*\land B^*)\lor (A^*\land C^*)$\\\hline
+f & f & f & f & f & f & f & f\\
+f & f & w & w & f & f & f & f\\
+f & w & f & w & f & f & f & f\\
+f & w & w & w & f & f & f & f\\
+w & f & f & f & f & f & f & f\\
+w & f & w & w & w & f & w & w\\
+w & w & f & w & w & w & f & w\\
+w & w & w & w & w & w & w & w
+\end{tabular}
+\caption{Wahrheitstafel für die Aussage}
+\end{figure}
+
+Also sind beide Seiten gleich.
+
+Mit Venn-Diagrammen:
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.4\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9]
+  \draw (-1.4,-2.5) rectangle (2.7,1.5);
+  \begin{scope}
+    \clip (0,0) circle (1);
+    \fill[gray!45] (1.3,0) circle (1);
+    \fill[gray!45] (0.65,-1.1) circle (1);
+  \end{scope}
+  \draw (0,0) circle (1);
+  \draw (1.3,0) circle (1);
+  \draw (0.65,-1.1) circle (1);
+  \node at (-0.6,0.8) {$A$};
+  \node at (1.9,0.8) {$B$};
+  \node at (0.65,-2.1) {$C$};
+\end{tikzpicture}
+
+\smallskip
+Linke Seite
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9]
+  \draw (-1.4,-2.5) rectangle (2.7,1.5);
+  \begin{scope}
+    \clip (0,0) circle (1);
+    \fill[gray!45] (1.3,0) circle (1);
+  \end{scope}
+  \begin{scope}
+    \clip (0,0) circle (1);
+    \fill[gray!45] (0.65,-1.1) circle (1);
+  \end{scope}
+  \draw (0,0) circle (1);
+  \draw (1.3,0) circle (1);
+  \draw (0.65,-1.1) circle (1);
+  \node at (-0.6,0.8) {$A$};
+  \node at (1.9,0.8) {$B$};
+  \node at (0.65,-2.1) {$C$};
+\end{tikzpicture}
+
+\smallskip
+Rechte Seite
+\end{minipage}
+\caption{Venn-Diagramme: Linke Seite, Rechte Seite}
+\end{figure}
+\end{proof}
+
+% ======================================================================
+% Vorkurs 6
+% ======================================================================
+Zu zwei Elementen $a, b \in M$ ist das ungeordnete Paar $\{a, b\} = \{b, a\}$ eine Menge.
+
+\setcounter{satz}{6}
+\begin{definition}[(1921) Kuratowski]
+Das geordnete Paar von zwei Elementen $a$, $b$ sei $(a, b) = \{\{a\}, \{a, b\}\}$.
+\end{definition}
+
+\begin{lemma}
+Sei $M$ eine Menge, $a, b, c, d \in M$. Dann ist $(a, b) = (c, d) \iff a = c \land b = d$.
+\end{lemma}
+
+Für die ungeordneten Paare stimmt das nicht: $\{1, 2\} = \{2, 1\}$.
+
+\begin{proof}
+\glqq$\Leftarrow$\grqq: Falls $a = c$ und $b = d$, so folgt $(a, b) = (c, d)$.\\
+\glqq$\leftarrow $\grqq: Durch Fallunterscheidung: Sei also $\{\{a\}, \{a, b\}\} = \{\{c\},\{c, d\}\}$.\\
+Das bedeutet $(\{a\} = \{c\} \land \{a, b\} = \{c, d\}) \lor \{a\} = \{c, d\} \land \{a, b\} = \{c\}$.
+
+1.: Angenommen, die Aussage der ersten Klammer ist wahr. Dann gilt nach a1: $a = c$. Die zweite Gleichung wird also zu $\{a, b\} = \{a, d\}$, also $b = d$.
+
+2.: Angenommen, die Aussage in der 2.\ Klammer ist wahr. Dann ist $a = c = d$ und $a = b = c$. \qedhere
+\end{proof}
+
+\begin{axiom}[Unendlichkeitsaxiom]
+Es gibt eine Unendlich $N_0$ mit $\emptyset$, sodass zu jedem $a \in N_0$ auch für den Nachfolger $a \cup \{a\}$. Eine solche Menge heißt induktiv.
+\end{axiom}
+
+\setcounter{satz}{8}
+\begin{definition}
+Eine natürliche Zahl sei eine Menge, die in jeder induktiven Menge enthalten ist.
+\end{definition}
+Wir schreiben $a+1$ für den Nachfolger von $a$: $0 = \emptyset$, $1 = 0+1 = \{\emptyset \}$, $2 = 1+1 = \{{\emptyset}, \{\emptyset \}\}$,\\
+$3 = 2+1 = \{{\emptyset}, \{\emptyset \}, \{{\emptyset}, \{\emptyset \}\}\}$.\\
+Die Menge $\mathbb{N}_0$ aller natürlichen Zahlen.
+
+\begin{lemmaohne}
+$\mathbb{N}_0 := \{a\mid \text{a ist Element jeder induktiven Menge}\}$ ist nicht leer.
+\end{lemmaohne}
+
+\begin{proof}
+Nach dem Unendlichkeitsaxiom existiert mindestens eine induktive Menge $N_0$. Nach dem Aussonderungsaxiom ist $\mathbb{N}_0 = \{a \in N\mid \text{a ist Element jeder induktiven Menge}\}$ eine Menge. Und in jeder induktiven Menge ist $\emptyset $ ein Element, also ist $\emptyset \in \mathbb{N}_0$.
+\end{proof}
+
+% ======================================================================
+% Vorkurs 7
+% ======================================================================
+Wir haben $\mathbb{N}_0$ so konstruiert, dass Folgendes gilt:
+
+\setcounter{satz}{10}
+\begin{lemma}[Vollständige Induktion, 1654 Blaise Pascal]
+Wenn für eine Teilmenge $m \in \mathbb{N}_0$ gilt
+\begin{enumerate}
+\item[1.] $0\in M$ (Induktionsanfang)
+\item[2.] Falls $n\in \mathbb{N}_0$ Element von $M$ ist, (Induktionsannahme), dann ist auch der Nachfolger $(n+1) \in M$ (Induktionsschritt),
+\end{enumerate}
+so folgt $M = \mathbb{N}_0$.
+\end{lemma}
+
+\begin{proof}
+Mit diesen beiden Eigenschaften ist $M$ eine induktive Menge. Da $\mathbb{N}_0$ Teilmenge jeder induktiven Menge ist, gilt $\mathbb{N}_0 \subseteq M$. Mit $M \subseteq \mathbb{N}_0$ folgt $M = \mathbb{N}_0$.
+\end{proof}
+
+\begin{bsp}[für Induktionsbeweise]
+Wir zeigen $0+1+2+...+n = \frac{n(n+1)}{2}$.\\
+Sei $M$ die Menge derjenigen natürlichen Zahlen, für die diese Formel gilt.\\
+Induktionsanfang: Für $n = 0$ besagt die Formel $0 = \frac{0(0+1)}{2}$.\\
+Induktionsschritt: Sei $n \in M$, dann gilt für $n+1$: $0+1+ ... +n+ (n+1) = \frac{n(n+1)}{2} + n + 1$ (Induktionsannahme) $= \frac{(n+2)(n+1)}{2}$. Also ist $n+1 \in M$. Nach Induktion (Blaise Pascal 1654) ist also $M = \mathbb{N}_0$. Also stimmt die Behauptung für alle natürlichen Zahlen. $\square$
+\end{bsp}
+
+\begin{bsp}[2 für Induktion (Türme von Hanoi)]
+Man hat 3 Bauplätze. Auf einem steht ein Turm, der auf einen Bauplatz verlegt werden soll. Dabei kann immer ein Stockwerk bewegt werden, und es darf nicht auf ein kleineres Stockwerk gestellt werden.
+\end{bsp}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[thick] (-1.5,0) -- (7.5,0);
+  \foreach \x in {0,3,6} {
+    \draw[line width=2pt] (\x,0) -- (\x,2.2);
+  }
+  \draw[fill=gray!25,rounded corners=2pt] (-1.0,0) rectangle (1.0,0.4);
+  \draw[fill=gray!45,rounded corners=2pt] (-0.7,0.4) rectangle (0.7,0.8);
+  \draw[fill=gray!65,rounded corners=2pt] (-0.4,0.8) rectangle (0.4,1.2);
+\end{tikzpicture}
+\caption{Illustration zu Türme von Hanoi}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{c|c}
+Anzahl Stockwerke & Schritte\\\hline
+1 & 1\\
+2 & 2\\
+3 & 7\\
+4 & 15
+\end{tabular}
+\end{center}
+
+Beh: Lösen des Puzzles mit $n$ Stockwerken benötigt $2^n-1$ Schritte.
+
+\begin{proof}
+Induktionsanfang: Für einen Turm mit 0 Stockwerken benötigen wir 0 Schritte, $0 =2^0 -1$ $\checkmark$.\\
+Angenommen, die Behauptung stimmt für $n$ Stockwerke für eine feste natürliche Zahl $n$.
+
+Für $(n+1)$ Stockwerke müssen zunächst die obersten $n$ Stockwerke auf einen anderen Platz verlegt werden. Das kostet $2^{n-1}$ Schritte. Dann kann das Erdgeschoss verlegt werden. Danach werden die obersten Stockwerke auf das Erdgeschoss verlegt ($2^{n-1}$). Also kostete der Bau ($2^{n-1}+1+2^{n-1} = 2^{n+1}-1$) Schritte.
+
+Also stimmt die Beh.\ für jedes $n \in \mathbb{N}_0$.
+\end{proof}
+
+% ======================================================================
+% Vorkurs 8
+% ======================================================================
+\begin{axiom}[Potenzmengenaxiom]
+Zu jeder Menge $M$ existiert die Menge aller Teilmengen von $M$, $\mathcal{P}(N)$, die Potenzmenge.
+\end{axiom}
+
+Beispiel: $M = \{0, 1, 2\}$, dann ist $\mathcal{P}(M) = \{\emptyset, \{1\}, \{2\}, \{0, 1\}, \{0,2\}, \{1, 2\}, \{0, 1, 2\}\}$
+
+\setcounter{satz}{11}
+\begin{lemma}
+Für jede endliche Menge mit $n$ Elementen hat $\mathcal{P}(M)$ $2^n$ viele Elemente.
+\end{lemma}
+
+\begin{proof}
+Mit vollständiger Induktion. Induktionsanfang: $M = \emptyset$, dann ist $\mathcal{P}(M) = \{\emptyset \}$ einelementig. Induktionsschritt: Angenommen, die Behauptung stimmt für ein festes gegebenes $n$, für alle Mengen mit $n$ vielen Elementen. Sei $M = \{a_1, a_2, ..., a_{n+1}\}$ eine Menge mit $(n+1)$ vielen Elementen.\\
+$\mathcal{P}(M) = \{N \in \mathcal{P}(N)\mid N \subseteq M \mid a_{n+1} \in N\} \cup \{N\in \mathcal{P}(N)\mid N \subseteq M, a_{n+1}\notin M\}$\\
+Diese Mengen sind beide gleich groß, und die zweite dieser beiden Mengen ist die $\mathcal{P}(\{a_1, ..., a_n\})$, hat also $2^n$ viele Elemente nach Ind.\ Vor. Also hat $\mathcal{P}(M)$ $2^n+2^n = 2^{n+1}$ viele Elemente.
+\end{proof}
+
+\begin{bsp}
+Man kann $P(N)$ auf $[0,2] \subseteq \mathbb{R}$ abbilden: Zu $A = \{n_1, n_2, ...\}\in \mathcal{P}(\mathbb{N}_0)$ sei $x=2^{-n_1}+2^{-n_2}+... \in [0, 2]$. Dies sind die reellen Zahlen in Binärdarstellung, und es ist $1{,}111...  = 2$ (bzgl.\ Basis 2). Allerdings kommen ein paar Zahlen hier wird die Menge $\mathbb{N}_0$ also auf die Zahl 2 abgebildet.
+
+Es gibt also mindestens so viele reelle Zahlen in $\mathcal{P(N)}$ wie in $[0, 2]$. Über Abbildungen wie $x \to \frac{x-}{x(x(2-x))}$ lässt sich das offene Intervall $(0, 2)$ eins-zu-eins auf ganz $\mathbb{R}$ abbilden. In diesem Sinne hat $[0, 2]$ also genauso viele Elemente wie $\mathbb{R}$.
+\end{bsp}
+
+\setcounter{satz}{12}
+\begin{lemma}[Kuratowski]
+Das kartesische Produkt zweier Mengen $M$; $N$ $M \times N := \{(a, b)\mid a\in M, b\in N\}$
+\end{lemma}
+
+\begin{proof}
+Es gilt $a, \{a, b\}\subseteq M \cup N$, also $\{a\}, \{a, b\} \subseteq P(M\cup N)$ und $(a, b) = \{\{a\}, \{a, b\}\} \subseteq \mathcal{P}(M \cup N)$ und somit $(a, b) \in \mathcal{P}(P(M\cup N))$. Nach dem Aussonderungsaxiom ist\\
+$M \times N = \subseteq \{x \in \mathcal{p}(\mathcal{P}(M\cup N))\mid \text{es gibt } a\in M, b\in M \text{ mit } (a, b)=x\}$ eine Menge.\\
+Mit vollst.\ Induktion lassen sich damit auch Produkte $M_1 \times ... \times M_n = ()()()$ von $n$ Mengen, deren Elem.\ geordnete $n$-Tupel $a_1, ..., a_n$ sind. Analog konstruiert man Vereinigungen $M_1 \cup ... \cup M_n$, Durchschnitte $M_1, \cap ..., M_n$ usw.
+\end{proof}
+
+\begin{axiom}[Auswahlaxiom]
+Sei $M$ eine Menge von nicht-leeren Mengen, sodass $A\cap  B = \emptyset$ für alle $A, B \in M$. Dann existiert eine Menge $N$, sodass $A \cap N$ genau ein Element hat.
+\end{axiom}
+
+% ======================================================================
+% Vorkurs 9
+% ======================================================================
+Beispiel: Für $M = \{\{1, 2, 3\}, \{4, 5, 6\}, \{7, 8\}\}$ wäre z.\,B.\ $N = \{2, 6, 7\}$ ebenfalls eine Menge.
+
+Man kann auch für beliebig viele Mengen $A_1. A_2, ...$ ein kartesisches Produkt
+
+$A_1 \times A_2 \times ... = \{(a_1, a_2, ...)\}$ bedeutet das Auswahlaxiom gerade: Das kartesische Produkt von nicht-leeren Mengen ist nicht leer.
+
+\setcounter{satz}{13}
+\begin{bemerkung}[Satz von Banach-Tarski 1924]
+Man kann einen Ball (d.\,h.\ eine Vollkugel) in 5 Stücke zerlegen, die sich durch Drehen und Bewegen im $\mathbb{R}^3$ (aber nicht strecken, verformen) lückenlos zu 2 Bällen zusammensetzen lassen, von denen jeder genauso groß ist wie der erste Ball.
+\end{bemerkung}
+
+Das Auswahlaxiom wird schon im 1.~Sem.\ in der Analysis~1 5x und in der Linearen Algebra~1 1x eingesetzt. Das Auswahlaxiom wird oft in der äquivalenten Gestalt des \glqq Zornschen Lemmas\grqq{} und des \glqq Wohlordnungssatzes\grqq{} verwendet.
+
+Das 'C' in ZFC steht für \glqq Axiom of choice\grqq, es gibt noch 2 weitere Axiome in ZFC, die aber fast nur in speziellen Mengenlehre-Vorlesungen verwendet werden: das Fundierungsaxiom und das Ersetzungsaxiom.
+
+\end{document}
