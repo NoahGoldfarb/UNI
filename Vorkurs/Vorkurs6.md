@@ -24,3 +24,7 @@ Lemma: $\mathbb{N}_0  := \{a| \text{a ist Element jeder induktiven Menge}\}$ ist
 
 Bew: Nach dem Unendlichkeitsaxiom ex.mind. eine Induktive Menge $N_0$ Nach dem Aussanderungsaxiom ist $\mathbb{N}_0$ = $\{a \in N| \text{a ist Element jeder induktiven Menge}\}$ eine Menge. Und in jeder Induktiven Menge ist $\emptyset $ ein Element also ist $\emptyset \in \mathbb{N}_0$ $\square$
 
+
+
+
+
