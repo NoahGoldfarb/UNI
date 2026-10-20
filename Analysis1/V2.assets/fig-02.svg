@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="361" viewBox="0 100 1000 361">
+<defs><marker id="arrow" orient="auto" markerUnits="strokeWidth" style="overflow:visible"><path d="M 1.4,0 C 0.2,0.4 -1.6,1.2 -3.6,2.5 C -2.9,1.1 -2.9,-1.1 -3.6,-2.5 C -1.6,-1.2 0.2,-0.4 1.4,0 Z" style="fill:#000000;stroke:none"/></marker></defs>
+<g id="figure">
+<ellipse cx="327.6" cy="315.2" rx="122.9" ry="122.3" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/>
+<ellipse cx="447.8" cy="319.2" rx="122.9" ry="122.3" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/>
+<text x="183" y="226.8" style="font-size:28px;font-family:serif;fill:#000000">N</text>
+<text x="567.1" y="212.6" style="font-size:28px;font-family:serif;fill:#000000">M</text>
+<path d="M 107.2 268.7 L 245.9 288.3" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)"/>
+<circle cx="688.5" cy="268.6" r="3.6" style="fill:#000000;stroke:none"/>
+<path d="M 688.5 268.6 L 536.2 316.8" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)"/>
+<circle cx="102.7" cy="210.4" r="3.6" style="fill:#000000;stroke:none"/>
+<text x="681.5" y="250.5" style="font-size:28px;font-family:serif;fill:#000000">$x \in M$</text>
+<text x="70.1" y="243.4" style="font-size:28px;font-family:serif;fill:#000000">$x \in N$</text>
+<path d="M 341 159.1 C 344.4 201.6 358.6 242.6 382.2 278.1" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)"/>
+<text x="306" y="145.8" style="font-size:28px;font-family:serif;fill:#000000">$x \in  M \cap N$</text>
+<path d="M 661.2 176.4 C 613.8 148.5 556.1 144.5 505.4 165.5" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)"/>
+<text x="672.4" y="211.5" style="font-size:28px;font-family:serif;fill:#000000">$x \notin N \cup M$</text>
+</g>
+</svg>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="393" viewBox="0 12 1000 393">
+<defs/>
+<g id="figure">
+<circle cx="275.8" cy="178.8" r="110.8" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/>
+<circle cx="386.6" cy="177.1" r="110.8" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/>
+<circle cx="332.7" cy="273.9" r="110.8" style="fill:none;stroke:#000000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/>
+<text x="69" y="57.5" style="font-size:28px;font-family:serif;fill:#000000">$n = 3$</text>
+</g>
+</svg>
