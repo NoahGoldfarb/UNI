@@ -414,29 +414,248 @@ Bildet man auf beiden Seiten das Komplement, folgt
 \subsection{Kartesisches Produkt}
 
 \begin{definition}
-Seien $A$ und $B$ Mengen. Das \emph{kartesische Produkt} von $A$ und $B$ ist
-\[
-  A \times B = \{\, (a, b) \mid a \in A,\ b \in B \,\},
-\]
-die Menge aller \emph{geordneten Paare} $(a, b)$ mit $a \in A$ und $b \in B$. Diese werden mengentheoretisch so gebildet, dass für alle $x, y, \tilde{x}, \tilde{y}$ gilt:
-\[
-  (x, y) = (\tilde{x}, \tilde{y}) \iff x = \tilde{x} \ \land\ y = \tilde{y}.
-\]
-Zum Beispiel kann man $(x, y) = \bigl\{ \{x\}, \{x, y\} \bigr\}$ setzen (Kuratowski).
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Seien $A$ und $B$ Mengen. Das \emph{kartesische Produkt} von $A$ und $B$ ist
+  \[
+    A \times B = \{\, (a, b) \mid a \in A,\ b \in B \,\},
+  \]
+  die Menge aller \emph{geordneten Paare} $(a, b)$ mit $a \in A$ und $b \in B$. Diese werden mengentheoretisch so gebildet, dass für alle $x, y, \tilde{x}, \tilde{y}$ gilt:
+  \[
+    (x, y) = (\tilde{x}, \tilde{y}) \iff x = \tilde{x} \ \land\ y = \tilde{y}.
+  \]
+  Zum Beispiel kann man $(x, y) = \bigl\{ \{x\}, \{x, y\} \bigr\}$ setzen (Kuratowski).
+
+  \item Für endlich viele Mengen $A_1, \dots, A_n$ ($n \in \N_0$) bilden wir entsprechend
+  \[
+    A_1 \times A_2 \times \dots \times A_n = \prod_{i=1}^{n} A_i = \{\, (a_1, a_2, \dots, a_n) \mid a_i \in A_i \text{ für } 1 \leq i \leq n \,\},
+  \]
+  wobei für $x_1, \dots, x_n, \tilde{x}_1, \dots, \tilde{x}_n$ stets gilt:
+  \[
+    (x_1, \dots, x_n) = (\tilde{x}_1, \dots, \tilde{x}_n) \iff x_1 = \tilde{x}_1 \ \land\ \dots\ \land\ x_n = \tilde{x}_n.
+  \]
+
+  \item Eine \emph{(binäre) Relation} auf einer Menge $A$ ist eine Teilmenge $R \subseteq A \times A$. Allgemeiner können Relationen auf einem Mengenpaar $A, B$ betrachtet werden: $R \subseteq A \times B$.
+\end{enumerate}
 \end{definition}
 
-\begin{bsp}
-$\R \times \R = \R^2$ ist die Koordinatenebene:
+\begin{beispiel}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Die \emph{euklidische Ebene} $\mathbb{E}_2 = \R^2 = \R \times \R$ ist die Koordinatenebene:
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.8,>=stealth]
+    \draw[->] (-0.5,0) -- (5,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,3.5) node[above] {$y$};
+    \fill (3,2) circle (2pt) node[above right] {$(a, b)$};
+    \draw[dashed] (3,0) node[below] {$a$} -- (3,2) -- (0,2) node[left] {$b$};
+  \end{tikzpicture}
+  \caption{$\R \times \R$}
+  \end{figure}
+
+  \item Die Menge $\{\, (a, a) \mid a \in \R \,\} \subseteq \R^2$ kann geometrisch als \emph{Gerade} (die Winkelhalbierende) interpretiert werden -- oder auch als Relation auf $\R$, nämlich als die \emph{Gleichheitsrelation} $=_\R$ für reelle Zahlen.
+
+  \item Die Menge $\{\, (a, a + b^2) \mid a, b \in \R \,\} = \{\, (x, y) \in \R^2 \mid x \leq y \,\}$ ist die \emph{Kleinergleichrelation} $\leq_\R$ auf $\R$. Geometrisch ist das die Halbebene oberhalb der Winkelhalbierenden (einschließlich dieser).
+\end{enumerate}
+
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.8,>=stealth]
-  \draw[->] (-0.5,0) -- (5,0) node[right] {$x$};
-  \draw[->] (0,-0.5) -- (0,3.5) node[above] {$y$};
-  \fill (3,2) circle (2pt) node[above right] {$(a, b)$};
-  \draw[dashed] (3,0) node[below] {$a$} -- (3,2) -- (0,2) node[left] {$b$};
+\begin{tikzpicture}[scale=0.55,>=stealth]
+  % links: Gleichheitsrelation
+  \draw[gray!30,very thin] (-3,-3) grid (3,3);
+  \draw[->] (-3.3,0) -- (3.5,0) node[right] {$x$};
+  \draw[->] (0,-3.3) -- (0,3.5) node[above] {$y$};
+  \draw[thick,green!50!black] (-3,-3) -- (3,3);
+  \node[below] at (0,-3.4) {$=_\R$};
+
+  % rechts: Kleinergleichrelation
+  \begin{scope}[xshift=9cm]
+    \fill[blue!20] (-3,-3) -- (3,3) -- (-3,3) -- cycle;
+    \draw[gray!30,very thin] (-3,-3) grid (3,3);
+    \draw[->] (-3.3,0) -- (3.5,0) node[right] {$x$};
+    \draw[->] (0,-3.3) -- (0,3.5) node[above] {$y$};
+    \draw[thick,blue] (-3,-3) -- (3,3);
+    \node[below] at (0,-3.4) {$\leq_\R$};
+  \end{scope}
 \end{tikzpicture}
-\caption{$\R \times \R$}
+\caption{Gleichheitsrelation und Kleinergleichrelation als Teilmengen von $\R^2$}
 \end{figure}
-\end{bsp}
+\end{beispiel}
+
+% ======================================================================
+\section{Abbildungen und Bijektionen}
+
+\begin{bemerkung}[Motivation]
+Eine Abbildung von $A$ nach $B$ ordnet jedem $a \in A$ ein Element $b_a \in B$ zu: $A \to B$, $a \mapsto b_a$.
+\begin{enumerate}[label=(\arabic*)]
+  \item $x \mapsto x^2$ für $A = B = \R$. Diese Zuordnung lässt sich mit ihrem Graphen $\{\, (x, x^2) \mid x \in \R \,\} \subseteq \R \times \R$ identifizieren:
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.5,>=stealth]
+    \draw[gray!30,very thin] (-4,-1) grid (4,7);
+    \draw[->] (-4.3,0) -- (4.5,0) node[right] {$x$};
+    \draw[->] (0,-1.3) -- (0,7.5) node[above] {$y$};
+    \foreach \t in {-2,2} \node[below] at (\t,0) {\small $\t$};
+    \foreach \t in {2,4,6} \node[left] at (0,\t) {\small $\t$};
+    \draw[thick,domain=-2.6:2.6,samples=60] plot (\x,{\x*\x});
+  \end{tikzpicture}
+  \caption{Graph von $x \mapsto x^2$}
+  \end{figure}
+
+  \item Mit $\pi = 3{,}141592653589\ldots$ betrachte
+  \[
+    \N \to \{0, 1, 2, \dots, 9\}, \qquad n \mapsto n\text{-te Nachkommastelle von } \pi,
+  \]
+  also $1 \mapsto 1$, $2 \mapsto 4$, \dots:
+  \begin{center}
+  \begin{tabular}{c|ccccc}
+  $n$ & 1 & 2 & 3 & 4 & 5 \\\hline
+  Bild & 1 & 4 & 1 & 5 & 9
+  \end{tabular}
+  \end{center}
+\end{enumerate}
+\end{bemerkung}
+
+\begin{definition}
+Seien $A, B$ Mengen. Eine \emph{Abbildung} $\alpha$ von $A$ nach $B$, i.\,Z.\ $\alpha\colon A \to B$, ist eine Relation $\alpha \subseteq A \times B$ mit der (wesentlichen) Eigenschaft:
+\[
+  \text{Für jedes } a \in A \text{ gibt es genau ein } b \in B \text{ mit } (a, b) \in \alpha.
+\]
+Für eine Abbildung $\alpha\colon A \to B$ heißt $A$ der \emph{Definitionsbereich} und $B$ \emph{ein Wertebereich} von $\alpha$. Ist $(a, b) \in \alpha$, so schreiben wir prägnanter
+\[
+  a\alpha = b, \qquad a.\alpha = b, \qquad (a)\alpha = b \qquad\text{oder}\qquad a^\alpha = b
+\]
+und nennen $a\alpha$ das \emph{Bildelement} von $a$ unter $\alpha$. Schließlich heißt
+\[
+  \operatorname{Bild}(\alpha) = A\alpha = \{\, a\alpha \mid a \in A \,\} \subseteq B
+\]
+das (gesamte) \emph{Bild} von $\alpha$.
+\end{definition}
+
+\begin{bem}
+\leavevmode
+\begin{itemize}
+  \item Achtung: In der Analysis würden wir fast immer $\alpha(a) = b$ schreiben. In dieser Vorlesung stehen Abbildungen \emph{rechts} vom Argument.
+  \item Für $\R \to \R$, $x \mapsto x^2$ ist das Bild gerade $\R_{\geq 0}$.
+  \item Da eine Abbildung als Relation definiert ist, ist der Wertebereich nicht eindeutig festgelegt: Für uns sind die Abbildungen $\sin\colon \R \to \R$ und $\sin\colon \R \to [-1, 1]$ gleich.
+  \item Die \emph{leere Abbildung} ist $\emptyset\colon \emptyset \to \emptyset$ (allgemeiner $\emptyset\colon \emptyset \to B$ für jede Menge $B$).
+\end{itemize}
+\end{bem}
+
+\begin{definition}
+Seien $A, B$ Mengen.
+\begin{enumerate}[label=(\alph*)]
+  \item $\operatorname{Abb}(A, B) = \{\, \alpha \mid \alpha\colon A \to B \,\}$ ist die Menge aller Abbildungen von $A$ nach $B$.
+  \item Eine Abbildung $\alpha\colon A \to B$ heißt \emph{injektiv}, falls aus $a\alpha = \tilde{a}\alpha$ stets $a = \tilde{a}$ folgt.
+  \item Die Abbildung $\alpha$ bildet $A$ \emph{surjektiv} auf $B$ ab, falls $\operatorname{Bild}(\alpha) = B$.
+\end{enumerate}
+Schließlich heißt $\alpha\colon A \to B$ eine \emph{Bijektion} von $A$ auf $B$ (kurz: \emph{bijektiv}), falls $\alpha$ injektiv ist und $A$ surjektiv auf $B$ abbildet.
+\end{definition}
+
+\begin{bem}
+Mit zunehmender Erfahrung schreiben wir (auch) kurz: \glqq$\alpha\colon A \to B$ ist surjektiv bzw.\ bijektiv.\grqq
+\end{bem}
+
+\begin{beispiel}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Die Abbildung $f\colon \R \to \R$, $x \mapsto x^2$ ist weder injektiv (z.\,B.\ $(-2)f = 4 = 2f$) noch surjektiv auf $\R$ (z.\,B.\ $-1 \notin \operatorname{Bild}(f)$). \\
+  Ihre Einschränkung auf $\R_{\geq 0}$, d.\,h.\ die Abbildung $g\colon \R_{\geq 0} \to \R_{\geq 0}$, $x \mapsto x^2$, ist eine Bijektion von $\R_{\geq 0}$ auf sich.
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.5,>=stealth]
+    \draw[gray!30,very thin] (-4,-1) grid (4,7);
+    \draw[->] (-4.3,0) -- (4.5,0) node[right] {$x$};
+    \draw[->] (0,-1.3) -- (0,7.5) node[above] {$y$};
+    \draw[thick,gray,domain=-2.6:0,samples=40] plot (\x,{\x*\x});
+    \draw[ultra thick,blue,domain=0:2.6,samples=40] plot (\x,{\x*\x}) node[right] {$g$};
+    \draw[dashed] (-2,0) node[below] {\small $-2$} -- (-2,4) -- (2,4) -- (2,0) node[below] {\small $2$};
+    \node[left] at (0,4) {\small $4$};
+  \end{tikzpicture}
+  \caption{$f$ (grau und blau) und ihre Einschränkung $g$ auf $\R_{\geq 0}$ (blau)}
+  \end{figure}
+
+  \item Seien $a, b \in \R$ und
+  \[
+    \alpha = \alpha_{a, b}\colon \R \to \R, \qquad x \mapsto ax + b.
+  \]
+  \emph{Behauptung:} Für $a \neq 0$ ist $\alpha_{a, b}$ eine Bijektion von $\R$ auf sich.
+  \begin{proof}
+  Sei $a \neq 0$.
+
+  \emph{Injektivität:} Seien $x, y \in \R$ mit $x\alpha = y\alpha$. Dann gilt $ax + b = ay + b$, also $ax = ay$, und wegen $a \neq 0$ folgt $x = y$.
+
+  \emph{Surjektivität:} Sei $y \in \R$. Gesucht ist ein $x \in \R$ mit $x\alpha = y$. Setze $x = a^{-1}(y - b)$. Dann ist tatsächlich
+  \[
+    x\alpha = a\bigl(a^{-1}(y - b)\bigr) + b = y. \qedhere
+  \]
+  \end{proof}
+
+  \item Für beliebige Mengen $A$ gilt
+  \[
+    \operatorname{Abb}(\emptyset, A) = \{\emptyset\}, \qquad \operatorname{Abb}(A, \emptyset) = \emptyset \ \text{ für } A \neq \emptyset.
+  \]
+  Die Menge $\operatorname{Abb}(\{1, 2, 3\}, \{0, 1\})$ besteht aus genau $8 = 2^3$ Elementen. In solchen Situationen verwenden wir häufig \emph{Abbildungstafeln}; z.\,B.\ bezeichnet
+  \[
+    \begin{pmatrix} 1 & 2 & 3 \\ 0 & 1 & 1 \end{pmatrix}
+  \]
+  die Abbildung $\{1, 2, 3\} \to \{0, 1\}$, die durch $1 \mapsto 0$, $2 \mapsto 1$ und $3 \mapsto 1$ gegeben ist. Streng genommen ist diese Abbildung die Menge
+  \[
+    \{(1, 0), (2, 1), (3, 1)\}.
+  \]
+
+  \item Sei $A$ eine Menge. Für $T \subseteq A$ bezeichne
+  \[
+    \iota_T\colon A \to \{0, 1\}, \qquad a \mapsto
+    \begin{cases}
+      0 & \text{falls } a \notin T,\\
+      1 & \text{falls } a \in T
+    \end{cases}
+  \]
+  die zugehörige \emph{Indikatorfunktion}. Dann liefert
+  \[
+    \iota\colon \Pot(A) \to \operatorname{Abb}(A, \{0, 1\}), \qquad T \mapsto \iota_T
+  \]
+  eine Bijektion. Mithilfe von $\iota$ lassen sich die einfachen \glqq Rechenregeln\grqq{} für $\cup$, $\cap$, $\setminus$ übersetzen (und damit verständlich machen) in entsprechende Rechenregeln für $\operatorname{Abb}(A, \{0, 1\})$, wobei mit den jeweiligen Bildern modulo~$2$ gerechnet wird. Etwa gilt für alle $a \in A$:
+  \[
+    a\iota_{S \cap T} = (a\iota_S)(a\iota_T), \qquad a\iota_{A \setminus T} = 1 + a\iota_T \pmod 2.
+  \]
+\end{enumerate}
+\end{beispiel}
+
+\begin{satz}[und Definition]
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Seien $A, B, C, D$ Mengen und $\alpha\colon A \to B$, $\beta\colon B \to C$, $\gamma\colon C \to D$ Abbildungen. Das \emph{Kompositum} (oder: die \emph{Hintereinanderausführung}) von $\alpha$ und $\beta$ ist die Abbildung
+  \[
+    \alpha\beta\colon A \to C, \qquad a \mapsto (a\alpha)\beta.
+  \]
+  Es gilt das \emph{Assoziativgesetz}
+  \[
+    (\alpha\beta)\gamma = \alpha(\beta\gamma).
+  \]
+  \item Die \emph{identische Abbildung} auf einer Menge $A$ ist $\operatorname{id}_A\colon A \to A$, $a \mapsto a$. Für jede Abbildung $\alpha\colon A \to B$ gilt
+  \[
+    \operatorname{id}_A \alpha = \alpha = \alpha \operatorname{id}_B.
+  \]
+\end{enumerate}
+\end{satz}
+
+\begin{proof}
+(a) Beide Seiten sind Abbildungen von $A$ nach $D$, und für beliebiges $a \in A$ gilt
+\[
+  a\bigl((\alpha\beta)\gamma\bigr) = \bigl(a(\alpha\beta)\bigr)\gamma = \bigl((a\alpha)\beta\bigr)\gamma = (a\alpha)(\beta\gamma) = a\bigl(\alpha(\beta\gamma)\bigr).
+\]
+(b) Für $a \in A$ ist $a(\operatorname{id}_A\alpha) = (a \operatorname{id}_A)\alpha = a\alpha$ und $a(\alpha\operatorname{id}_B) = (a\alpha)\operatorname{id}_B = a\alpha$.
+\end{proof}
+
+\begin{bem}
+Für die Hintereinanderausführung $\alpha\beta$ haben wir implizit vorausgesetzt, dass $\operatorname{Bild}(\alpha)$ im Definitionsbereich von $\beta$ liegt. Verzichtet man auf diese Bedingung, ist also $\beta\colon B' \to C$ mit einer beliebigen Menge $B'$, so ergibt sich trotzdem eine Abbildung
+\[
+  \alpha\beta\colon A_0 \to C \qquad\text{mit}\qquad A_0 = \{\, a \in A \mid a\alpha \in B' \,\}
+\]
+mit entsprechend eingeschränktem Definitionsbereich.
+\end{bem}
 
 \end{document}
