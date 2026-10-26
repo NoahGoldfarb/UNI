@@ -23,6 +23,7 @@
 \newtheorem{bemerkung}[satz]{Bemerkung}
 \newtheorem{beispiel}[satz]{Beispiel}
 \newtheorem{axiom}[satz]{Axiom}
+\newtheorem{hilfssatz}[satz]{Hilfssatz}
 \newtheorem*{axiomohne}{Axiom}
 \newtheorem*{satzohne}{Satz}
 \newtheorem*{bsp}{Beispiel}
@@ -631,6 +632,19 @@ Mit zunehmender Erfahrung schreiben wir (auch) kurz: \glqq$\alpha\colon A \to B$
   \[
     \alpha\beta\colon A \to C, \qquad a \mapsto (a\alpha)\beta.
   \]
+  \begin{center}
+  \begin{tikzpicture}[>=stealth,node distance=2.4cm]
+    \node (A) {$A$};
+    \node[right of=A] (B) {$B$};
+    \node[right of=B] (C) {$C$};
+    \node[right of=C] (D) {$D$};
+    \draw[->] (A) -- node[above] {$\alpha$} (B);
+    \draw[->] (B) -- node[above] {$\beta$} (C);
+    \draw[->] (C) -- node[above] {$\gamma$} (D);
+    \draw[->] (A) to[bend right=35] node[below] {$\alpha\beta$} (C);
+    \draw[->] (B) to[bend left=35] node[above] {$\beta\gamma$} (D);
+  \end{tikzpicture}
+  \end{center}
   Es gilt das \emph{Assoziativgesetz}
   \[
     (\alpha\beta)\gamma = \alpha(\beta\gamma).
@@ -639,6 +653,15 @@ Mit zunehmender Erfahrung schreiben wir (auch) kurz: \glqq$\alpha\colon A \to B$
   \[
     \operatorname{id}_A \alpha = \alpha = \alpha \operatorname{id}_B.
   \]
+  \item Sei $\alpha\colon A \to B$ injektiv. Dann ist
+  \[
+    \alpha^{-1} = \{\, (b, a) \mid (a, b) \in \alpha \,\} \subseteq \operatorname{Bild}(\alpha) \times A
+  \]
+  eine Abbildung $\alpha^{-1}\colon \operatorname{Bild}(\alpha) \to A$ mit
+  \[
+    \alpha\alpha^{-1} = \operatorname{id}_A \qquad\text{und}\qquad \alpha^{-1}\alpha = \operatorname{id}_{\operatorname{Bild}(\alpha)}.
+  \]
+  Die Abbildung $\alpha^{-1}$ heißt entsprechend die \emph{Umkehrabbildung} zu $\alpha$.
 \end{enumerate}
 \end{satz}
 
@@ -648,6 +671,10 @@ Mit zunehmender Erfahrung schreiben wir (auch) kurz: \glqq$\alpha\colon A \to B$
   a\bigl((\alpha\beta)\gamma\bigr) = \bigl(a(\alpha\beta)\bigr)\gamma = \bigl((a\alpha)\beta\bigr)\gamma = (a\alpha)(\beta\gamma) = a\bigl(\alpha(\beta\gamma)\bigr).
 \]
 (b) Für $a \in A$ ist $a(\operatorname{id}_A\alpha) = (a \operatorname{id}_A)\alpha = a\alpha$ und $a(\alpha\operatorname{id}_B) = (a\alpha)\operatorname{id}_B = a\alpha$.
+
+(c) Um einzusehen, dass $\alpha^{-1}$ eine Abbildung ist, sei $b \in \operatorname{Bild}(\alpha)$. Dann gibt es ein $a \in A$ mit $a\alpha = b$, also $(b, a) \in \alpha^{-1}$. Seien nun $(b, a), (b, \tilde{a}) \in \alpha^{-1}$; zu zeigen ist $a = \tilde{a}$. Da $\alpha$ injektiv ist, folgt aus $a\alpha = b = \tilde{a}\alpha$ tatsächlich $a = \tilde{a}$. Damit ist $\alpha^{-1}$ als Abbildung mit Definitionsbereich $\operatorname{Bild}(\alpha) \subseteq B$ und Wertebereich (sogar Bild) $A$ erkannt.
+
+Die weiteren Behauptungen rechnen wir sofort nach: Für $a \in A$ ist $(a, a\alpha) \in \alpha$, also $(a\alpha)\alpha^{-1} = a$, d.\,h.\ $\alpha\alpha^{-1} = \operatorname{id}_A$. Für $b \in \operatorname{Bild}(\alpha)$ ist $b\alpha^{-1}$ gerade das (eindeutige) $a$ mit $a\alpha = b$, also $(b\alpha^{-1})\alpha = b$, d.\,h.\ $\alpha^{-1}\alpha = \operatorname{id}_{\operatorname{Bild}(\alpha)}$. Insbesondere ist auch $\operatorname{Bild}(\alpha^{-1}) = A$.
 \end{proof}
 
 \begin{bem}
@@ -657,5 +684,61 @@ Für die Hintereinanderausführung $\alpha\beta$ haben wir implizit vorausgesetz
 \]
 mit entsprechend eingeschränktem Definitionsbereich.
 \end{bem}
+
+\begin{lemma}
+Für eine Abbildung $\alpha\colon A \to B$ gelten:
+\begin{enumerate}[label=(\alph*)]
+  \item $\alpha$ ist injektiv $\iff$ $\exists B_0 \subseteq B\ \exists \beta \in \operatorname{Abb}(B_0, A)$: $\alpha\beta = \operatorname{id}_A$.
+  \item $\alpha$ ist surjektiv (auf $B$) $\iff$ $\exists \gamma \in \operatorname{Abb}(B, A)$: $\gamma\alpha = \operatorname{id}_B$.
+\end{enumerate}
+\end{lemma}
+
+\begin{bem}
+Ist $A \neq \emptyset$, so bleibt (a) richtig, wenn wir starr $B_0 = B$ setzen. Dann reicht $\beta = \alpha^{-1}$ wie im Beweis unten nicht immer aus, da $\alpha^{-1}$ nur auf $\operatorname{Bild}(\alpha)$ definiert ist; man setzt $\alpha^{-1}$ dann beliebig auf $B$ fort, etwa durch $b \mapsto a_0$ für alle $b \in B \setminus \operatorname{Bild}(\alpha)$ mit einem festen $a_0 \in A$. (Für $A = \emptyset \neq B$ geht das nicht, denn dann ist $\operatorname{Abb}(B, \emptyset) = \emptyset$.)
+\end{bem}
+
+\begin{proof}
+(a) \glqq$\Rightarrow$\grqq: Ist $\alpha$ injektiv, so wählen wir $B_0 = \operatorname{Bild}(\alpha)$ und $\beta = \alpha^{-1}$ (Satz~2.5\,(c)).
+
+\glqq$\Leftarrow$\grqq: Seien nun $B_0 \subseteq B$ und $\beta\colon B_0 \to A$ mit $\alpha\beta = \operatorname{id}_A$ gegeben. Zu zeigen ist, dass $\alpha$ injektiv ist. Seien $a, \tilde{a} \in A$ mit $a\alpha = \tilde{a}\alpha$. Dann folgt tatsächlich
+\[
+  a = a\operatorname{id}_A = a(\alpha\beta) = (a\alpha)\beta = (\tilde{a}\alpha)\beta = \tilde{a}(\alpha\beta) = \tilde{a}\operatorname{id}_A = \tilde{a}.
+\]
+
+(b) \glqq$\Rightarrow$\grqq: Sei zunächst $\alpha$ surjektiv auf $B$. Zu jedem $b \in B$ finden wir ein $a_b \in A$ mit $a_b\alpha = b$. Wir definieren $\gamma\colon B \to A$ mittels $b\gamma = a_b$.\,$(*)$ Für beliebiges $b \in B$ gilt dann
+\[
+  b(\gamma\alpha) = (b\gamma)\alpha = a_b\alpha = b,
+\]
+also ist $\gamma\alpha = \operatorname{id}_B$.
+
+\glqq$\Leftarrow$\grqq: Sei umgekehrt $\gamma\colon B \to A$ mit $\gamma\alpha = \operatorname{id}_B$ gegeben. Zu zeigen ist, dass $\alpha$ surjektiv auf $B$ ist. Sei $b \in B$ gegeben und setze $a = b\gamma \in A$. Dann gilt tatsächlich
+\[
+  b = b\operatorname{id}_B = b(\gamma\alpha) = (b\gamma)\alpha = a\alpha \in \operatorname{Bild}(\alpha). \qedhere
+\]
+\end{proof}
+
+\begin{bem}
+Für $(*)$, also die gleichzeitige Auswahl eines Urbilds $a_b$ für \emph{jedes} $b \in B$, wird das \emph{Auswahlaxiom} verwendet.
+\end{bem}
+
+\begin{hilfssatz}
+Eine Abbildung $\alpha\colon A \to B$ ist genau dann eine Bijektion von $A$ auf $B$, wenn Abbildungen $\beta, \gamma\colon B \to A$ existieren mit
+\[
+  \alpha\beta = \operatorname{id}_A \qquad\text{und}\qquad \gamma\alpha = \operatorname{id}_B.
+\]
+In diesem Fall gilt bereits $B = \operatorname{Bild}(\alpha)$ und $\beta = \gamma = \alpha^{-1}$.
+\end{hilfssatz}
+
+\begin{proof}
+\glqq$\Rightarrow$\grqq: Sei $\alpha\colon A \to B$ bijektiv. Insbesondere bildet $\alpha$ surjektiv auf $B$ ab, d.\,h.\ $\operatorname{Bild}(\alpha) = B$, und somit liefern Satz~2.5\,(c) und Lemma~2.6 die Abbildung $\beta = \alpha^{-1}\colon B \to A$ sowie $\gamma$ mit $\alpha\beta = \operatorname{id}_A$ und $\gamma\alpha = \operatorname{id}_B$.
+
+\glqq$\Leftarrow$\grqq: Sind umgekehrt $\beta, \gamma\colon B \to A$ gegeben mit $\alpha\beta = \operatorname{id}_A$ und $\gamma\alpha = \operatorname{id}_B$, so liefert Lemma~2.6 direkt: $\alpha$ ist injektiv und surjektiv auf $B$.
+
+\emph{Zusatz:} Wegen $\gamma\alpha = \operatorname{id}_B$ ist $\operatorname{Bild}(\alpha) = B$ (Lemma~2.6\,(b)). Weiter ist
+\[
+  \beta = \operatorname{id}_B\beta = (\gamma\alpha)\beta = \gamma(\alpha\beta) = \gamma\operatorname{id}_A = \gamma.
+\]
+Die Bedingungen $\alpha\beta = \operatorname{id}_A$ und $\beta\alpha = \operatorname{id}_B$ liefern dann $\gamma = \beta = \alpha^{-1}$: Für $b \in B$ gibt es nämlich $a \in A$ mit $a\alpha = b$, und es folgt $b\beta = (a\alpha)\beta = a = b\alpha^{-1}$.
+\end{proof}
 
 \end{document}
