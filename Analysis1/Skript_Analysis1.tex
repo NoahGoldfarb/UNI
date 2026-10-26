@@ -283,4 +283,177 @@ Mit Induktion über $n$.
 hat also insgesamt $m \cdot n + m = m \cdot (n+1)$ Elemente. Somit stimmt die Behauptung auch für $n + 1$, nach dem Induktionsprinzip also für alle $n \in \N$.
 \end{proof}
 
+\paragraph{Funktionen.}
+
+\begin{definition}
+Für zwei Mengen $M, N$ heißt eine Teilmenge $f \subseteq M \times N$ (\emph{Graph einer}) \emph{Funktion} oder (\emph{Graph einer}) \emph{Abbildung} mit \emph{Definitionsbereich} $M$ und \emph{Wertebereich} $N$, falls es für jedes $a \in M$ genau ein $b \in N$ gibt mit $(a, b) \in f$. Dieses $b$ heißt der \emph{Wert} $f(a)$ von $f$ an der Stelle $a$.
+
+\emph{Schreibweise:}
+\[
+  f\colon M \to N, \qquad a \mapsto f(a).
+\]
+\end{definition}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.58,>=stealth]
+  % Punkt (a, b) des Graphen
+  \draw[->] (-0.3,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,3.2) node[above] {$y$};
+  \fill (2.2,2) circle (2pt) node[above right] {$(a, f(a))$};
+  \draw[dashed] (2.2,0) node[below] {$a$} -- (2.2,2) -- (0,2) node[left] {$b$};
+  \node[below] at (1.8,-0.8) {Funktion};
+
+  % keine Funktion: nicht für jedes a ein Wert
+  \begin{scope}[xshift=7cm]
+    \draw[->] (-0.3,0) -- (4,0) node[right] {$x$};
+    \draw[->] (0,-0.3) -- (0,3.2) node[above] {$y$};
+    \draw[thick] (0.2,1.6) .. controls (0.8,0.6) and (1.3,0.8) .. (1.5,1.4);
+    \draw[thick] (2.4,2.6) .. controls (3,2.4) and (2.9,0.6) .. (3.7,0.4);
+    \draw[dashed,gray] (1.95,0) -- (1.95,3);
+    \node[below] at (1.8,-0.8) {keine Funktion};
+  \end{scope}
+
+  % keine Funktion: zwei Werte an einer Stelle
+  \begin{scope}[xshift=14cm]
+    \draw[->] (-0.3,0) -- (4,0) node[right] {$x$};
+    \draw[->] (0,-0.3) -- (0,3.2) node[above] {$y$};
+    \draw[thick] (-0.3,1.4) -- (3.8,1.4);
+    \fill (1.6,2.4) circle (2pt);
+    \fill (2.9,2.5) circle (2pt);
+    \draw[dashed,gray] (1.6,0) -- (1.6,3);
+    \node[below] at (1.8,-0.8) {keine Funktion};
+  \end{scope}
+\end{tikzpicture}
+\caption{Links der Graph einer Funktion. Mitte: Nicht jede Stelle hat einen Wert. Rechts: An einer Stelle gibt es zwei Werte.}
+\end{figure}
+
+\begin{bsp}
+\leavevmode
+\begin{itemize}
+  \item Auf einer Menge $M$ ist $\operatorname{id}_M = \{\, (a, a) \mid a \in M \,\}$ die \emph{Identitätsabbildung}, d.\,h.\ $\operatorname{id}_M(a) = a$.
+  \item Auf $\N$ ist $\{\, (a, a+1) \mid a \in \N \,\}$ die \emph{Nachfolgerfunktion}
+  \[
+    \N \to \N, \qquad n \mapsto n + 1.
+  \]
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.55,>=stealth]
+    \draw[gray!30,very thin] (-0.5,-0.5) grid (5.5,6.5);
+    \draw[->] (-0.8,0) -- (6,0) node[right] {$n$};
+    \draw[->] (0,-0.8) -- (0,7) node[above] {$n+1$};
+    \foreach \n in {0,...,5} {
+      \fill (\n,\n+1) circle (3pt);
+      \node[below] at (\n,0) {\small $\n$};
+    }
+    \foreach \t in {1,...,6} \node[left] at (0,\t) {\small $\t$};
+  \end{tikzpicture}
+  \caption{Graph der Nachfolgerfunktion}
+  \end{figure}
+  \item $g\colon \Q \setminus \{0\} \to \Q$, $x \mapsto \frac1x$ ist eine Funktion, die nicht auf ganz $\Q$ definiert ist. Ähnlich sind
+  \[
+    \tilde{g}\colon \Q \setminus \{0\} \to \Q \setminus \{0\},\ x \mapsto \tfrac1x
+    \qquad\text{und}\qquad
+    \hat{g}\colon\, ]0; 1[ \,\to \Q^+,\ x \mapsto \tfrac1x
+  \]
+  Funktionen, wobei hier $]0; 1[ \,= \{\, x \in \Q \mid 0 < x < 1 \,\}$ und $\Q^+ = \{\, x \in \Q \mid x > 0 \,\}$.
+\end{itemize}
+\end{bsp}
+
+\begin{defn}
+Sei $f\colon M \to N$ eine Funktion. Für $A \subseteq M$ und $B \subseteq N$ heißen
+\[
+  f(A) = \{\, b \in N \mid \text{es gibt ein } a \in A \text{ mit } f(a) = b \,\}
+\]
+das \emph{Bild} von $A$ unter $f$ und
+\[
+  f^{-1}(B) = \{\, a \in M \mid f(a) \in B \,\}
+\]
+das \emph{Urbild} von $B$ unter $f$.
+\end{defn}
+
+\begin{bsp}
+Für $g\colon \Q \setminus \{0\} \to \Q$, $x \mapsto \frac1x$ ist $g(\Q \setminus \{0\}) = \Q \setminus \{0\}$ und $g(\Q^+) = \Q^+$.
+\end{bsp}
+
+\begin{definition}
+Zu Funktionen $g\colon M \to Q$ und $f\colon N \to P$ heißt
+\[
+  f \circ g\colon g^{-1}(N \cap Q) \to P, \qquad a \mapsto f(g(a))
+\]
+die \emph{Verkettung} (oder \emph{Komposition}) von $f$ und $g$.
+\end{definition}
+
+\begin{bsp}
+Die Verkettung von $g\colon x \mapsto \frac1x$ mit der Nachfolgerfunktion $f\colon n \mapsto n + 1$ ist
+\[
+  g \circ f\colon \N \to \Q, \qquad n \mapsto \frac{1}{n+1}.
+\]
+\end{bsp}
+
+\begin{lemma}
+Für Funktionen $f, g, h$ gilt $(f \circ g) \circ h = f \circ (g \circ h)$.
+\end{lemma}
+
+\begin{proof}
+Beide Seiten sind genau für diejenigen $a$ definiert, für die $h(a)$ im Definitionsbereich von $g$ und $g(h(a))$ im Definitionsbereich von $f$ liegt. Für ein solches $a$ ist
+\[
+  \bigl((f \circ g) \circ h\bigr)(a) \overset{\text{Def.}}{=} (f \circ g)\bigl(h(a)\bigr) = f\bigl(g(h(a))\bigr) = f\bigl((g \circ h)(a)\bigr) = \bigl(f \circ (g \circ h)\bigr)(a).
+\]
+Die linke und die rechte Seite haben also dieselben Werte und sind somit gleich.
+\end{proof}
+
+\begin{definition}
+Eine Funktion $f\colon M \to N$ heißt
+\begin{enumerate}[label=(\arabic*)]
+  \item \emph{surjektiv}, falls $f(M) = N$,
+  \item \emph{injektiv}, falls für alle $b \in N$ das Urbild $f^{-1}(\{b\})$ höchstens ein Element enthält,
+  \item \emph{bijektiv}, falls sie surjektiv und injektiv ist.
+\end{enumerate}
+\end{definition}
+
+\begin{bem}
+Anschaulich ist eine Funktion $f\colon M \to N$
+\begin{center}
+\begin{tabular}{lll}
+surjektiv, & falls jeder Wert in $N$ & \emph{mindestens} einmal \\
+injektiv,  & falls jeder Wert in $N$ & \emph{höchstens} einmal \\
+bijektiv,  & falls jeder Wert in $N$ & \emph{genau} einmal
+\end{tabular}
+\end{center}
+angenommen wird.
+\end{bem}
+
+\begin{bsp}
+Die Betragsfunktion $f_1\colon \Q \to \Q$, $x \mapsto |x|$ ist
+\begin{itemize}
+  \item nicht surjektiv, da z.\,B.\ $-1$ nicht angenommen wird,
+  \item nicht injektiv, da z.\,B.\ $5$ sowohl bei $-5$ als auch bei $5$ angenommen wird.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.45,>=stealth]
+  \draw[gray!30,very thin] (-6,-2) grid (6,6);
+  \draw[->] (-6.3,0) -- (6.5,0) node[right] {$x$};
+  \draw[->] (0,-2.3) -- (0,6.5) node[above] {$y$};
+  \foreach \t in {-5,5} \node[below] at (\t,0) {\small $\t$};
+  \node[left] at (0,5) {\small $5$};
+  \draw[thick,green!50!black] (-6,6) -- (0,0) -- (6,6);
+  \draw[dashed] (-5,0) -- (-5,5) -- (5,5) -- (5,0);
+\end{tikzpicture}
+\caption{Graph der Betragsfunktion}
+\end{figure}
+\end{bsp}
+
+\paragraph{Umkehrfunktion.}
+Für eine bijektive Abbildung $f\colon M \to N$ ist die \emph{Umkehrfunktion}
+\[
+  f^{-1}\colon N \to M, \qquad b \mapsto a \ \text{ mit } f(a) = b.
+\]
+Insbesondere ist $f^{-1}(f(a)) = a$, also $f^{-1} \circ f = \operatorname{id}_M$, und umgekehrt $f \circ f^{-1} = \operatorname{id}_N$. Liegt $(a, b)$ im Graphen von $f$, d.\,h.\ $f(a) = b$, so liegt $(b, a)$ im Graphen von $f^{-1}$.
+
+\begin{bem}
+Das Urbild $f^{-1}(B)$ einer Menge ist für \emph{jede} Funktion definiert, die Umkehrfunktion $f^{-1}$ nur für bijektive. Für bijektives $f$ passen beide Schreibweisen zusammen: $f^{-1}(\{b\}) = \{f^{-1}(b)\}$.
+\end{bem}
+
 \end{document}
