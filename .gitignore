@@ -8,3 +8,6 @@
 *.synctex.gz
 *.out
 *.toc
+
+# Java-Build-Artefakte
+*.class
