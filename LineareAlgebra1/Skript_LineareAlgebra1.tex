@@ -741,4 +741,94 @@ In diesem Fall gilt bereits $B = \operatorname{Bild}(\alpha)$ und $\beta = \gamm
 Die Bedingungen $\alpha\beta = \operatorname{id}_A$ und $\beta\alpha = \operatorname{id}_B$ liefern dann $\gamma = \beta = \alpha^{-1}$: Für $b \in B$ gibt es nämlich $a \in A$ mit $a\alpha = b$, und es folgt $b\beta = (a\alpha)\beta = a = b\alpha^{-1}$.
 \end{proof}
 
+% ======================================================================
+\section{Abzählen und Mächtigkeit von Mengen}
+
+\begin{definition}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Zwei Mengen $A, B$ heißen \emph{gleichmächtig} (auch: von gleicher \emph{Mächtigkeit} bzw.\ \emph{Kardinalität}), falls es eine Bijektion $f\colon A \to B$ gibt. Wir schreiben dann $A \approx B$.
+
+  \emph{Merke:} Offenbar gelten für Mengen $A, B, C$:
+  \begin{enumerate}[label=(\roman*)]
+    \item $A \approx A$;
+    \item $A \approx B \iff B \approx A$;
+    \item aus $A \approx B$ und $B \approx C$ folgt $A \approx C$.
+  \end{enumerate}
+  (Verwende $\operatorname{id}_A$, die Umkehrabbildung $f^{-1}$ bzw.\ das Kompositum zweier Bijektionen.)
+
+  \item Eine Menge $A$ heißt \emph{endlich}, falls $A \approx \{1, 2, \dots, n\}$ für ein geeignetes $n \in \N_0$ gilt (für $n = 0$ ist $\{1, \dots, n\} = \emptyset$). Ist in diesem Fall $f\colon \{1, 2, \dots, n\} \to A$ eine Bijektion, so gilt offenbar
+  \[
+    A = \{a_1, a_2, \dots, a_n\},
+  \]
+  wobei die Elemente $a_i = if$, $1 \leq i \leq n$, paarweise verschieden sind. Ist $A$ nicht endlich, so heißt $A$ \emph{unendlich}; z.\,B.\ ist $\N$ unendlich.
+
+  Für $m, n \in \N_0$ gilt: $\{1, 2, \dots, m\} \approx \{1, 2, \dots, n\} \iff m = n$.
+\end{enumerate}
+Dementsprechend definieren wir die \emph{Mächtigkeit} einer Menge $A$ als
+\[
+  \#A = |A| =
+  \begin{cases}
+    n & \text{falls } A \approx \{1, 2, \dots, n\} \text{ für ein } n \in \N_0,\\
+    \infty & \text{andernfalls.}
+  \end{cases}
+\]
+Zur Illustration unterscheiden wir bestenfalls noch zwischen
+\begin{itemize}
+  \item $A \approx \N$: $A$ ist \emph{abzählbar unendlich}, und
+  \item $A$ ist unendlich, aber nicht abzählbar unendlich: $A$ ist \emph{überabzählbar}.
+\end{itemize}
+\end{definition}
+
+\begin{beispiel}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Es gilt
+  \[
+    \N \subsetneq \N_0 \subsetneq \Z \subsetneq \Q \subsetneq \R,
+  \]
+  aber $\N \approx \N_0 \approx \Z \approx \Q$ und $\N \not\approx \R$. Zum Beispiel ist
+  \[
+    \N_0 \to \N, \qquad n \mapsto n + 1
+  \]
+  eine Bijektion (mit Umkehrabbildung $\N \to \N_0$, $n \mapsto n - 1$).
+
+  \item $\N \approx \Z \approx \Q$. Eine Bijektion $\N \to \Z$ ist gegeben durch die Abbildungstafel
+  \[
+    \begin{pmatrix} 1 & 2 & 3 & 4 & 5 & 6 & \dots \\ 0 & 1 & -1 & 2 & -2 & 3 & \dots \end{pmatrix}
+  \]
+  (\glqq Reißverschlusstrick\grqq). Für $\Q$ kann mit dem gleichen Reißverschlusstrick die Behauptung $\N \approx \Q$ auf $\N \approx \Q^+$ zurückgeführt werden. Jede positive rationale Zahl können wir als gekürzten Bruch schreiben:
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=1.3cm,y=0.9cm]
+    % Diagonalen a + b = i + 1
+    \foreach \s in {2,...,6}
+      \draw[blue!40,thick] (\s-1,-1) -- (1,-\s+1);
+    \foreach \a in {1,...,5}
+      \foreach \b in {1,...,5} {
+        \pgfmathtruncatemacro{\g}{gcd(\a,\b)}
+        \ifnum\g=1
+          \node[fill=white,inner sep=1.5pt] at (\a,-\b) {$\frac{\a}{\b}$};
+        \else
+          \node[fill=white,inner sep=1.5pt,text=gray!60] at (\a,-\b) {$\frac{\a}{\b}$};
+        \fi
+      }
+    \foreach \a in {1,...,5} \node at (\a,-5.8) {$\vdots$};
+    \foreach \b in {1,...,5} \node at (5.8,-\b) {$\cdots$};
+    \foreach \i in {1,...,5} \node[blue,font=\small] at (\i+0.45,-0.45) {$A_{\i}$};
+  \end{tikzpicture}
+  \caption{Positive Brüche $\frac{a}{b}$; auf der $i$-ten Diagonalen gilt $a + b = i + 1$. Nicht gekürzte Brüche sind grau.}
+  \end{figure}
+  Somit ist
+  \[
+    \Q^+ = \Bigl\{\, \frac{a}{b} \Bigm| a, b \in \N \text{ teilerfremd} \,\Bigr\} = \bigcup_{i \in \N} A_i
+  \]
+  mit paarweise disjunkten Teilmengen
+  \[
+    A_i = \Bigl\{\, \frac{a}{b} \Bigm| a, b \in \N \text{ teilerfremd mit } a + b = i + 1 \,\Bigr\},
+  \]
+  also etwa $A_1 = \{\frac{1}{1}\}$, $A_2 = \{\frac{1}{2}, \frac{2}{1}\}$, $A_3 = \{\frac{1}{3}, \frac{3}{1}\}$, $A_4 = \{\frac{1}{4}, \frac{2}{3}, \frac{3}{2}, \frac{4}{1}\}$. Jedes $A_i$ ist endlich mit höchstens $i$ Elementen.
+\end{enumerate}
+\end{beispiel}
+
 \end{document}
