@@ -456,4 +456,174 @@ Insbesondere ist $f^{-1}(f(a)) = a$, also $f^{-1} \circ f = \operatorname{id}_M$
 Das Urbild $f^{-1}(B)$ einer Menge ist für \emph{jede} Funktion definiert, die Umkehrfunktion $f^{-1}$ nur für bijektive. Für bijektives $f$ passen beide Schreibweisen zusammen: $f^{-1}(\{b\}) = \{f^{-1}(b)\}$.
 \end{bem}
 
+% ----------------------------------------------------------------------
+% Vorlesung 4
+% ----------------------------------------------------------------------
+\paragraph{Zusammenfassung.}
+Eine Funktion $f\colon M \to N$ ist eine Teilmenge von $M \times N$, sodass es für \emph{alle} $m \in M$ genau ein Paar $(m, n)$ mit $n \in N$ im Graphen von $f$ gibt. Schreibweise: $f(m) = n$ ist der \emph{Funktionswert} an der Stelle $m$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.5cm,y=0.08cm,>=stealth]
+  \draw[gray!30,very thin,xstep=1,ystep=10] (-7,-25) grid (5,55);
+  \draw[->] (-7.3,0) -- (5.5,0) node[right] {$x$};
+  \draw[->] (0,-26) -- (0,57) node[above] {$y$};
+  \foreach \t in {-5,5} \node[below] at (\t,0) {\small $\t$};
+  \foreach \t in {-20,20,40} \node[left] at (0,\t) {\small $\t$};
+  \draw[thick,green!50!black,domain=-5.5:3.55,samples=120,smooth]
+    plot (\x,{(\x)^3 + 3*(\x)^2 - 9*(\x) + 3});
+\end{tikzpicture}
+\caption{Graph einer Funktion: Zu jedem $x$ gibt es genau einen Funktionswert, aber manche Werte werden mehrfach angenommen (die Funktion ist nicht injektiv).}
+\end{figure}
+
+$f$ ist genau dann bijektiv, wenn es zu jedem $n \in N$ genau ein Paar $(m, n)$ im Graphen von $f$ gibt. Die Umkehrfunktion $f^{-1}\colon N \to M$ ist dann eindeutig bestimmt durch
+\[
+  f^{-1}(n) = \text{das eindeutig bestimmte } m \in M \text{ mit } f(m) = n.
+\]
+
+\begin{lemma}
+Seien $M, N, P$ Mengen und $g\colon M \to N$, $f\colon N \to P$ bijektiv. Dann gilt
+\[
+  (f \circ g)^{-1} = g^{-1} \circ f^{-1} \qquad\text{und}\qquad (f^{-1})^{-1} = f.
+\]
+\end{lemma}
+
+\begin{proof}
+Wegen $f(n) = p \iff f^{-1}(p) = n$ ist $f$ die Umkehrfunktion von $f^{-1}$, also $(f^{-1})^{-1} = f$.
+
+Sei $p \in P$ und $m \in M$ mit $(f \circ g)(m) = p$. Aus $f(g(m)) = p$ folgt $g(m) = f^{-1}(p)$ und daraus
+\[
+  m = g^{-1}\bigl(f^{-1}(p)\bigr) = (g^{-1} \circ f^{-1})(p).
+\]
+Also ist $(f \circ g)^{-1} = g^{-1} \circ f^{-1}$. (Dabei ist $f \circ g$ als Verkettung bijektiver Funktionen wieder bijektiv, die Umkehrfunktion existiert also.)
+\end{proof}
+
+\begin{satz}[Rekursionssatz, Dedekind 1888]\label{satz:rekursion}
+Sei $M$ eine Menge, $a \in M$ und $H\colon \N \times M \to M$ eine Funktion (\emph{Rekursionsvorschrift}). Dann gibt es genau eine Funktion $f\colon \N \to M$ mit
+\begin{enumerate}[label=(\arabic*)]
+  \item $f(0) = a$,
+  \item $f(n + 1) = H\bigl(n, f(n)\bigr)$ für alle $n \in \N$.
+\end{enumerate}
+\end{satz}
+
+Es ist also
+\[
+  f(0) = a, \qquad f(1) = H\bigl(0, f(0)\bigr) = H(0, a), \qquad f(2) = H\bigl(1, f(1)\bigr) = H\bigl(1, H(0, a)\bigr), \quad \dots
+\]
+
+\begin{definition}
+Die \emph{Fakultät} sei die Funktion $\N \to \N$, $n \mapsto n!$ mit
+\[
+  0! = 1 \qquad\text{und}\qquad (n + 1)! = (n + 1) \cdot n!.
+\]
+\end{definition}
+
+Somit ist $0! = 1$, $1! = 1 \cdot 0! = 1$, $2! = 2 \cdot 1! = 2$, $3! = 3 \cdot 2! = 6$, \dots, d.\,h.\ $n! = 1 \cdot 2 \cdot \ldots \cdot n$. Nach dem Rekursionssatz ist die Fakultät wohldefiniert: Hier ist $M = \N$, $a = 1$ und $H(n, k) = (n + 1) \cdot k$.
+
+\begin{proof}[Beweis von Satz~\ref{satz:rekursion}]
+\emph{Existenz.} Zunächst zeigen wir mit vollständiger Induktion, dass für jedes $n \in \N$ eine Funktion
+\[
+  f_n\colon \{0, \dots, n\} \to M
+\]
+mit $f_n(0) = a$ und $f_n(k + 1) = H\bigl(k, f_n(k)\bigr)$ für alle $k < n$ existiert, und zwar so, dass $f_{n+1}$ auf $\{0, \dots, n\}$ mit $f_n$ übereinstimmt.
+
+\emph{Induktionsanfang:} $f_0(0) = a$ liefert $f_0\colon \{0\} \to M$.
+
+\emph{Induktionsschritt:} Angenommen, für ein bestimmtes $n \in \N$ existiert $f_n\colon \{0, \dots, n\} \to M$. Setze dann
+\[
+  f_{n+1}\colon \{0, \dots, n + 1\} \to M, \qquad
+  k \mapsto
+  \begin{cases}
+    f_n(k) & \text{für } k \leq n,\\
+    H\bigl(n, f_n(n)\bigr) & \text{für } k = n + 1.
+  \end{cases}
+\]
+Dann hat $f_{n+1}$ die gewünschten Eigenschaften.
+
+Schließlich setzen wir den Graphen von $f$ als die Vereinigung der Graphen der $f_n$:
+\[
+  \text{Graph von } f = \bigcup_{n \in \N} \text{Graph von } f_n.
+\]
+Da die $f_n$ jeweils miteinander übereinstimmen, wo sie beide definiert sind, ist das wieder der Graph einer Funktion $f\colon \N \to M$, und $f$ erfüllt (1) und (2).
+
+\emph{Eindeutigkeit.} Erfüllen $f$ und $\tilde f$ beide (1) und (2), so zeigt man mit Induktion, dass $f(n) = \tilde f(n)$ für alle $n \in \N$: Es ist $f(0) = a = \tilde f(0)$, und aus $f(n) = \tilde f(n)$ folgt $f(n + 1) = H(n, f(n)) = H(n, \tilde f(n)) = \tilde f(n + 1)$.
+\end{proof}
+
+% ======================================================================
+% Vorlesung 5
+% ======================================================================
+\subsection{Körper}
+
+In diesem und dem nächsten Abschnitt werden die reellen Zahlen charakterisiert und konstruiert. Wie in Beispiel~1.2 werden die Eigenschaften von $\N$, $\Z$ und $\Q$ in dieser Vorlesung ohne Beweis vorausgesetzt; das wird in der Algebra-Vorlesung erledigt.
+
+\begin{definition}
+Ein \emph{Körper} $(K, +, \cdot)$ ist ein Tripel, bestehend aus einer Menge $K$ und zwei Abbildungen
+\[
+  +\colon K \times K \to K,\ (a, b) \mapsto a + b
+  \qquad\text{und}\qquad
+  \cdot\colon K \times K \to K,\ (a, b) \mapsto a \cdot b,
+\]
+die die folgenden Axiome erfüllen:
+\begin{enumerate}[label=(K\arabic*)]
+  \item Es gibt ein Element $0 \in K$ mit $a + 0 = a$ für alle $a \in K$. Ein solches Element $0$ heißt \emph{Null} von $K$.
+  \item Zu jedem $a \in K$ gibt es ein \emph{additives Inverses} $b \in K$ mit $a + b = 0$.
+  \item Für alle $a, b, c \in K$ gilt $a + (b + c) = (a + b) + c$ \hfill (Assoziativgesetz der Addition).
+  \item Es gibt ein Element $1 \in K \setminus \{0\}$ mit $a \cdot 1 = a$ für alle $a \in K$. Ein solches Element heißt \emph{Eins} von $K$.
+  \item Zu jedem $a \in K \setminus \{0\}$ gibt es ein \emph{multiplikatives Inverses} (oder \emph{Kehrwert}) $b \in K$ mit $a \cdot b = 1$.
+  \item Für alle $a, b, c \in K$ gilt $a \cdot (b \cdot c) = (a \cdot b) \cdot c$ \hfill (Assoziativgesetz der Multiplikation).
+  \item Für alle $a, b \in K$ gilt $a \cdot b = b \cdot a$ \hfill (Kommutativgesetz der Multiplikation).
+  \item Für alle $a, b, c \in K$ gilt $a \cdot (b + c) = a \cdot b + a \cdot c$ \hfill (Distributivgesetz).
+\end{enumerate}
+\end{definition}
+
+\begin{bem}
+\leavevmode
+\begin{itemize}
+  \item Mit \glqq es gibt ein\grqq{} ist stets \glqq es gibt \emph{mindestens} ein\grqq{} gemeint.
+  \item Wegen $1 \neq 0$ in (K4) ist $K = \{0\}$ kein Körper; ein Körper hat also mindestens zwei Elemente.
+  \item Mitunter schreibt man $0_K$, $1_K$, um den Unterschied zu den natürlichen Zahlen $0, 1 \in \N$ zu betonen.
+  \item Das Kommutativgesetz der Addition wird nicht gefordert: Es folgt aus den übrigen Axiomen (Lemma~\ref{lem:koerper}).
+\end{itemize}
+\end{bem}
+
+\begin{beispiel}
+\leavevmode
+\begin{enumerate}[label=(\arabic*)]
+  \item Die rationalen Zahlen $\Q = \bigl\{\, \frac{p}{q} \bigm| p \in \Z,\ q \in \Z,\ q > 0 \,\bigr\}$ mit
+  \[
+    \frac{p}{q} \cdot \frac{a}{b} = \frac{pa}{qb}, \qquad \frac{p}{q} + \frac{a}{b} = \frac{pb + qa}{qb}
+  \]
+  bilden einen Körper.
+  \item Das Produkt gerader Zahlen ist wieder gerade, ebenso die Summe. Mit $g$ bzw.\ $u$ als Symbolen für die Menge aller geraden bzw.\ ungeraden ganzen Zahlen erhält man die Rechenregeln
+  \[
+    \begin{array}{c|cc}
+      + & g & u \\\hline
+      g & g & u \\
+      u & u & g
+    \end{array}
+    \qquad\qquad
+    \begin{array}{c|cc}
+      \cdot & g & u \\\hline
+      g & g & g \\
+      u & g & u
+    \end{array}
+  \]
+  (z.\,B.\ ist \glqq ungerade $+$ ungerade $=$ gerade\grqq). Mit diesen Abbildungen $+$ und $\cdot$ ist $\mathbb{F}_2 = \{g, u\}$ ein Körper mit zwei Elementen: Die Kommutativ-, Assoziativ- und Distributivgesetze folgen aus denen für $\Z$, es ist $0_{\mathbb{F}_2} = g$ und $1_{\mathbb{F}_2} = u$, und $u$ ist der Kehrwert von $u$. Die Axiome (K1)--(K8) sind also erfüllt.
+\end{enumerate}
+\end{beispiel}
+
+\begin{lemma}\label{lem:koerper}
+Sei $(K, +, \cdot)$ ein Körper. Dann gilt:
+\begin{enumerate}[label=(\arabic*)]
+  \item Die Addition ist kommutativ, d.\,h.\ $a + b = b + a$ für alle $a, b \in K$.
+  \item Die Elemente $0$ und $1$ sind eindeutig bestimmt.
+  \item Die inversen Elemente bezüglich der Addition bzw.\ der Multiplikation sind eindeutig bestimmt. Sie werden als $-a$ bzw.\ $\frac{1}{a}$ (oder $a^{-1}$) geschrieben.
+\end{enumerate}
+\end{lemma}
+% Beweis von Lemma 1.15 folgt in der nächsten Vorlesung.
+
+\begin{bemerkung}
+Ein Tripel $(K, +, \cdot)$, das die Axiome (K1)--(K4) und (K6)--(K8) erfüllt (also alle außer der Existenz multiplikativer Inverser), heißt ein \emph{kommutativer Ring mit Eins}. Beispiel: $\Z$.
+\end{bemerkung}
+
 \end{document}
