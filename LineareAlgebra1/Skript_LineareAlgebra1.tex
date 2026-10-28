@@ -828,7 +828,255 @@ Zur Illustration unterscheiden wir bestenfalls noch zwischen
     A_i = \Bigl\{\, \frac{a}{b} \Bigm| a, b \in \N \text{ teilerfremd mit } a + b = i + 1 \,\Bigr\},
   \]
   also etwa $A_1 = \{\frac{1}{1}\}$, $A_2 = \{\frac{1}{2}, \frac{2}{1}\}$, $A_3 = \{\frac{1}{3}, \frac{3}{1}\}$, $A_4 = \{\frac{1}{4}, \frac{2}{3}, \frac{3}{2}, \frac{4}{1}\}$. Jedes $A_i$ ist endlich mit höchstens $i$ Elementen.
+
+  \item $\N \not\approx \R$. Zunächst liefert die Abbildung
+  \[
+    (0, 1)_\R \to \R, \qquad t \mapsto
+    \begin{cases}
+      \dfrac{1 - |2t - 1|}{2t - 1} & \text{falls } t \neq \tfrac12,\\[1ex]
+      0 & \text{falls } t = \tfrac12
+    \end{cases}
+  \]
+  eine Bijektion, also $(0, 1)_\R \approx \R$. Für $t < \frac12$ ist der Ausdruck gleich $\frac{2t}{2t - 1}$ und durchläuft $(-\infty, 0)$, für $t > \frac12$ ist er gleich $\frac{2 - 2t}{2t - 1}$ und durchläuft $(0, \infty)$.
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=6cm,y=0.45cm,>=stealth]
+    \draw[gray!30,very thin,xstep=0.25,ystep=1] (0,-6) grid (1,6);
+    \draw[->] (-0.1,0) -- (1.12,0) node[right] {$t$};
+    \draw[->] (0,-6.3) -- (0,6.6);
+    \foreach \y in {-4,-2,2,4} \node[left,font=\small] at (0,\y) {$\y$};
+    \draw[dashed,gray] (0.5,-6) -- (0.5,6);
+    \node[below,font=\small] at (0.5,-6) {$\tfrac12$};
+    \node[below left,font=\small] at (0,0) {$0$};
+    \node[below right,font=\small] at (1,0) {$1$};
+    \draw[thick,green!50!black,domain=0.005:0.429,samples=80] plot (\x,{2*\x/(2*\x-1)});
+    \draw[thick,green!50!black,domain=0.571:0.995,samples=80] plot (\x,{(2-2*\x)/(2*\x-1)});
+    \fill[green!50!black] (0.5,0) circle (1.6pt);
+    \draw[green!50!black,fill=white] (0,0) circle (1.6pt);
+    \draw[green!50!black,fill=white] (1,0) circle (1.6pt);
+  \end{tikzpicture}
+  \caption{Eine Bijektion $(0, 1)_\R \to \R$}
+  \end{figure}
+  Es bleibt $(0, 1)_\R \not\approx \N$ zu zeigen; dazu dient das \emph{Cantorsche Diagonalargument}. Wir verwenden: Jede reelle Zahl $x \in (0, 1)_\R$ lässt sich \emph{eindeutig} als Dezimalbruch schreiben, wenn keine Perioden der Form $\dots 999\dots$ verwendet werden (z.\,B.\ $0{,}32999\ldots = 0{,}33$).
+  \begin{proof}
+  Angenommen, $(0, 1)_\R \approx \N$. Dann lassen sich alle Elemente von $(0, 1)_\R$ in einer Liste aufzählen:
+  \begin{align*}
+    x_1 &= 0{,}x_{11}x_{12}x_{13}\dots\\
+    x_2 &= 0{,}x_{21}x_{22}x_{23}\dots\\
+    x_3 &= 0{,}x_{31}x_{32}x_{33}\dots\\
+    x_4 &= 0{,}x_{41}x_{42}x_{43}\dots\\
+        &\ \ \vdots
+  \end{align*}
+  mit Ziffern $x_{ij} \in \{0, 1, \dots, 9\}$ (ohne $9$er-Perioden).
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[x=1.1cm,y=0.65cm]
+    \foreach \i in {1,...,5} {
+      \node[left] at (0.35,-\i) {$x_{\i} = 0{,}$};
+      \foreach \j in {1,...,5} {
+        \ifnum\i=\j
+          \node[draw=red,thick,circle,inner sep=0.5pt,text=red] at (\j,-\i) {$x_{\i\j}$};
+        \else
+          \node at (\j,-\i) {$x_{\i\j}$};
+        \fi
+      }
+      \node at (5.9,-\i) {$\cdots$};
+    }
+    \foreach \j in {1,...,5} \node at (\j,-5.8) {$\vdots$};
+    \node at (5.9,-5.8) {$\ddots$};
+    \draw[red!50,thick,dashed] (0.6,-0.6) -- (5.6,-5.6);
+    \node[left,red] at (0.35,-7) {$y = 0{,}$};
+    \foreach \j in {1,...,5} \node[red] at (\j,-7) {$y_{\j}$};
+    \node[red] at (5.9,-7) {$\cdots$};
+  \end{tikzpicture}
+  \caption{Diagonalargument: Die $i$-te Ziffer von $y$ unterscheidet sich von der Diagonalziffer $x_{ii}$.}
+  \end{figure}
+  Setze nun $y = 0{,}y_1y_2y_3\dots$ mit den Ziffern
+  \[
+    y_i = \min\bigl(\{1, 2, \dots, 8\} \setminus \{x_{ii}\}\bigr) \in \{1, 2, \dots, 8\}.
+  \]
+  Da $y$ nur Ziffern aus $\{1, \dots, 8\}$ hat, liegt $y$ in $(0, 1)_\R$, und die Darstellung enthält keine $9$er-Periode. Für jedes $n \in \N$ gilt aber $y_n \neq x_{nn}$, d.\,h.\ $y$ unterscheidet sich von $x_n$ in der $n$-ten Nachkommastelle. Wegen der Eindeutigkeit der Dezimaldarstellung ist also $y \neq x_n$ für alle $n$ -- im Widerspruch dazu, dass die Liste ganz $(0, 1)_\R$ aufzählt.
+  \end{proof}
 \end{enumerate}
 \end{beispiel}
+
+\begin{bemerkung}[Kontinuumshypothese]
+Es stellt sich die Frage:
+\begin{enumerate}[label=(\arabic*)]
+  \item Sei $X \subseteq \R$ mit $|X| = \infty$. Gilt dann bereits $X \approx \N$ oder $X \approx \R$?
+\end{enumerate}
+Nach Gödel (1939) und Cohen (1963) ist diese Aussage \emph{unabhängig} von den ZF-Axiomen: Man könnte wahlweise (1) oder $\neg$(1) als weiteres Axiom hinzunehmen, ohne einen Widerspruch zu erzeugen.
+\end{bemerkung}
+
+% ======================================================================
+% Kapitel 2
+% ======================================================================
+\section*{Kapitel 2: Vektorräume}
+\addcontentsline{toc}{part}{Kapitel 2: Vektorräume}
+
+\section{Körper und Vektorräume}
+
+\begin{definition}
+Ein \emph{Körper} $K = (K, +, \cdot)$ besteht aus einer Trägermenge $K$ sowie zwei Verknüpfungen, der \emph{Addition} $+$ und der \emph{Multiplikation} $\cdot$,
+\[
+  +\colon K \times K \to K,\ (a, b) \mapsto a + b, \qquad
+  \cdot\colon K \times K \to K,\ (a, b) \mapsto a \cdot b = ab,
+\]
+welche die folgenden Axiome erfüllen:
+\begin{enumerate}[label=(\textup{A\arabic*}),leftmargin=3.2em]
+  \item $\forall a, b, c \in K\colon (a + b) + c = a + (b + c)$;
+  \item $\forall a, b \in K\colon a + b = b + a$;
+  \item Es existiert genau ein Element in $K$, welches mit $0 = 0_K$ bezeichnet wird, für das gilt: $\forall a \in K\colon a + 0 = 0 + a = a$;
+  \item Zu jedem $a \in K$ existiert genau ein Element in $K$, welches mit $-a$ bezeichnet wird, für das gilt: $a + (-a) = (-a) + a = 0$.
+\end{enumerate}
+\begin{enumerate}[label=(\textup{M\arabic*}),leftmargin=3.2em]
+  \item $\forall a, b, c \in K\colon a(bc) = (ab)c$;
+  \item $\forall a, b \in K\colon ab = ba$;
+  \item Es existiert genau ein Element in $K \setminus \{0\}$, welches mit $1 = 1_K$ bezeichnet wird, für das gilt: $\forall a \in K\colon a \cdot 1 = 1 \cdot a = a$;
+  \item Zu jedem $a \in K \setminus \{0\}$ existiert genau ein Element in $K$, welches mit $a^{-1} = \frac{1}{a}$ bezeichnet wird, für das gilt: $a \cdot a^{-1} = a^{-1} \cdot a = 1$.
+\end{enumerate}
+\begin{enumerate}[label=(\textup{D}),leftmargin=3.2em]
+  \item $\forall a, b, c \in K\colon (a + b) \cdot c = ac + bc$.
+\end{enumerate}
+\end{definition}
+
+\begin{bem}
+Später: (A1)--(A4) besagen, dass $(K, +)$ eine \emph{abelsche Gruppe} ist; ebenso ist $(K \setminus \{0\}, \cdot)$ eine abelsche Gruppe.
+\end{bem}
+
+\begin{lemma}[Folgerungen]
+Sei $K$ ein Körper.
+\begin{enumerate}[label=(\alph*)]
+  \item $\forall a \in K\colon a \cdot 0 = 0 \cdot a = 0$.
+  \item $\forall a, b \in K\colon (-a)b = -(ab)$.
+  \item $\forall a, b \in K\colon ab = 0 \implies (a = 0 \lor b = 0)$, d.\,h.\ $K$ ist \emph{nullteilerfrei}.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Mit (A3), (A4), (A1) und (D) gilt
+\[
+  a \cdot 0 = 0 + a \cdot 0 = \bigl(-(a \cdot 0) + a \cdot 0\bigr) + a \cdot 0 = -(a \cdot 0) + a \cdot (0 + 0) = -(a \cdot 0) + a \cdot 0 = 0.
+\]
+Wegen (M2) ist auch $0 \cdot a = 0$.
+
+(b) Es gilt $ab + (-a)b = \bigl(a + (-a)\bigr)b = 0 \cdot b = 0$. Aufgrund der Eindeutigkeit des additiven Inversen in (A4) gilt also $(-a)b = -(ab)$.
+
+(c) Sei $ab = 0$ und $a \neq 0$. Dann folgt
+\[
+  b = 1 \cdot b = (a^{-1}a)b = a^{-1}(ab) = a^{-1} \cdot 0 = 0. \qedhere
+\]
+\end{proof}
+
+\begin{beispiel}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item $\Q$, $\R$ und $\mathbb{C}$ sind Körper.
+  \item $\Z$ bildet \emph{keinen} Körper, da außer $1$ und $-1$ kein $a \in \Z \setminus \{0\}$ ein multiplikatives Inverses in $\Z$ besitzt. (Später: $\Z$ ist ein \emph{Ring}.)
+  \item $\mathbb{F}_2 = \{0, 1\}$ mit den Verknüpfungstafeln
+  \begin{center}
+  \begin{tabular}{c|cc}
+    $+$ & $0$ & $1$\\\hline
+    $0$ & $0$ & $1$\\
+    $1$ & $1$ & $0$
+  \end{tabular}
+  \qquad\qquad
+  \begin{tabular}{c|cc}
+    $\cdot$ & $0$ & $1$\\\hline
+    $0$ & $0$ & $0$\\
+    $1$ & $0$ & $1$
+  \end{tabular}
+  \end{center}
+  Mit etwas Geduld überprüft man die Axiome: $\mathbb{F}_2$ ist \emph{der} Körper mit zwei Elementen. Ähnlich (durch Ausprobieren) finden sich Körper $\mathbb{F}_3$, $\mathbb{F}_4$, $\mathbb{F}_5$ mit jeweils $3$, $4$, $5$ Elementen, aber \emph{kein} Körper mit $6$ Elementen.
+\end{enumerate}
+\end{beispiel}
+
+\begin{definition}
+Sei $K$ ein Körper. Für $a \in K$ und eine ganze Zahl $m \in \Z$ definieren wir
+\[
+  m \cdot a =
+  \begin{cases}
+    \underbrace{a + a + \dots + a}_{m \text{ Summanden}} & \text{falls } m > 0,\\
+    0_K & \text{falls } m = 0,\\
+    -\bigl((-m) \cdot a\bigr) & \text{falls } m < 0.
+  \end{cases}
+\]
+Es gelten dann die folgenden Rechenregeln (Übung): Für $m, n \in \Z$ und $a \in K$ ist
+\[
+  m \cdot a = (m \cdot 1_K) \cdot a, \qquad (m + n) \cdot a = m \cdot a + n \cdot a, \qquad (mn) \cdot a = m \cdot (n \cdot a).
+\]
+Links steht dabei jeweils die eben definierte Vielfachenbildung, in $(m \cdot 1_K) \cdot a$ dagegen außen die Multiplikation in $K$.
+\end{definition}
+
+\begin{definition}
+Sei $m \in \N$. Bekanntlich gibt es zu jedem $a \in \Z$ eindeutige $q, r \in \Z$ mit
+\[
+  a = mq + r \qquad\text{und}\qquad 0 \leq r < m.
+\]
+Wir bezeichnen den Rest $r$ von $a$ bei Division durch $m$ mit $r_m(a) \in \{0, 1, \dots, m - 1\}$ und setzen
+\[
+  R_m(\Z) = \operatorname{Bild}(r_m) = \{0, 1, \dots, m - 1\}.
+\]
+Darauf erklären wir die Verknüpfungen
+\begin{align*}
+  +_m\colon R_m(\Z) \times R_m(\Z) &\to R_m(\Z), & a +_m b &= r_m(a + b),\\
+  \cdot_m\colon R_m(\Z) \times R_m(\Z) &\to R_m(\Z), & a \cdot_m b &= r_m(a \cdot b).
+\end{align*}
+Hier lassen sich alle Körperaxiome außer (M4) nachprüfen; (M4) gilt jedoch etwa für $m \in \{2, 3, 5, 7\}$.
+\end{definition}
+
+\begin{satz}
+Sei $m \in \N$. Dann ist $R_m(\Z)$ genau dann ein Körper, wenn $m \in \Pm$ eine Primzahl ist.
+\end{satz}
+
+\begin{bem}
+Den Beweis liefern wir später (elementare Zahlentheorie).
+\end{bem}
+
+\begin{definition}
+Sei $K$ ein Körper (beispielsweise $K = \R$ oder $K = \mathbb{F}_2$). Ein \emph{Vektorraum} $V = (V, +, \cdot)$ über $K$, kurz ein \emph{$K$-Vektorraum}, besteht aus einer Trägermenge $V$ sowie zwei Verknüpfungen, einer \emph{Vektoraddition} und einer \emph{skalaren Multiplikation},
+\[
+  +\colon V \times V \to V,\ (x, y) \mapsto x + y, \qquad
+  \cdot\colon K \times V \to V,\ (a, x) \mapsto a \cdot x = ax,
+\]
+welche den folgenden Bedingungen genügen:
+\begin{enumerate}[label=(\textup{VA\arabic*}),leftmargin=3.8em]
+  \item $\forall x, y, z \in V\colon x + (y + z) = (x + y) + z$;
+  \item $\forall x, y \in V\colon x + y = y + x$;
+  \item Es existiert genau ein $+$-neutrales Element, bezeichnet mit $0 = 0_V$, für das also gilt: $\forall x \in V\colon x + 0 = 0 + x = x$;
+  \item Zu jedem $x \in V$ existiert genau ein $+$-inverses Element, bezeichnet mit $-x$, für das also gilt: $x + (-x) = 0$.
+\end{enumerate}
+\begin{enumerate}[label=(\textup{SM\arabic*}),leftmargin=3.8em]
+  \item $\forall a, b \in K\ \forall x \in V\colon (ab)x = a(bx)$;
+  \item $\forall x \in V\colon 1_K \cdot x = x$;
+  \item $\forall a \in K\ \forall x, y \in V\colon a(x + y) = ax + ay$;
+  \item $\forall a, b \in K\ \forall x \in V\colon (a + b)x = ax + bx$.
+\end{enumerate}
+Es gilt \glqq Punkt vor Strich\grqq. Zur Unterscheidung heißen die Elemente von $V$ \emph{Vektoren} und die Elemente von $K$ \emph{Skalare}.
+\end{definition}
+
+\begin{lemma}[Folgerungen]
+Sei $V$ ein $K$-Vektorraum. Weitere Rechenregeln lassen sich ableiten, zum Beispiel:
+\begin{enumerate}[label=(\alph*)]
+  \item $\forall a \in K\ \forall x \in V\colon a \cdot 0_V = 0_V = 0_K \cdot x$;
+  \item $\forall a \in K\ \forall x \in V\colon (-a)x = -(ax) = a(-x)$, insbesondere $(-1_K)x = -x$;
+  \item $\forall a \in K\ \forall x \in V\colon ax = 0_V \implies (a = 0_K \lor x = 0_V)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Nach (VA3) und (SM3) ist $a0_V = a(0_V + 0_V) = a0_V + a0_V$; Addition von $-(a0_V)$ auf beiden Seiten liefert $0_V = a0_V$. Ebenso ist nach (SM4) $0_Kx = (0_K + 0_K)x = 0_Kx + 0_Kx$, also $0_Kx = 0_V$.
+
+(b) Mit (SM4) und (a) gilt $ax + (-a)x = \bigl(a + (-a)\bigr)x = 0_Kx = 0_V$, und mit (SM3) und (a) gilt $ax + a(-x) = a\bigl(x + (-x)\bigr) = a0_V = 0_V$. Wegen der Eindeutigkeit des Inversen in (VA4) folgt $(-a)x = -(ax) = a(-x)$. Für $a = 1_K$ erhalten wir mit (SM2) insbesondere $(-1_K)x = -(1_Kx) = -x$.
+
+(c) Sei $ax = 0_V$ und $a \neq 0_K$. Mit (SM2), (SM1) und (a) folgt
+\[
+  x = 1_Kx = (a^{-1}a)x = a^{-1}(ax) = a^{-1}0_V = 0_V. \qedhere
+\]
+\end{proof}
+
+\begin{bem}
+Für Körper und für Vektorräume nutzen wir die Kurzschreibweisen $a - b = a + (-b)$ bzw.\ $x - y = x + (-y)$.
+\end{bem}
 
 \end{document}
