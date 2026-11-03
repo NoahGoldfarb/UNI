@@ -1055,7 +1055,7 @@ welche den folgenden Bedingungen genügen:
 Es gilt \glqq Punkt vor Strich\grqq. Zur Unterscheidung heißen die Elemente von $V$ \emph{Vektoren} und die Elemente von $K$ \emph{Skalare}.
 \end{definition}
 
-\begin{lemma}[Folgerungen]
+\begin{lemma}[Folgerungen]\label{lem:vr-folgerungen}
 Sei $V$ ein $K$-Vektorraum. Weitere Rechenregeln lassen sich ableiten, zum Beispiel:
 \begin{enumerate}[label=(\alph*)]
   \item $\forall a \in K\ \forall x \in V\colon a \cdot 0_V = 0_V = 0_K \cdot x$;
@@ -1078,5 +1078,124 @@ Sei $V$ ein $K$-Vektorraum. Weitere Rechenregeln lassen sich ableiten, zum Beisp
 \begin{bem}
 Für Körper und für Vektorräume nutzen wir die Kurzschreibweisen $a - b = a + (-b)$ bzw.\ $x - y = x + (-y)$.
 \end{bem}
+
+% ----------------------------------------------------------------------
+% Vorlesung 7
+% ----------------------------------------------------------------------
+\begin{beispiel}\label{bsp:vektorraeume}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item $K = \R$ und $V = \R^2 = \{(x_1, x_2) \mid x_1, x_2 \in \R\}$ mit
+  \[
+    (x_1, x_2) + (y_1, y_2) = (x_1 + y_1, x_2 + y_2) \qquad\text{und}\qquad a \cdot (x_1, x_2) = (a x_1, a x_2),
+  \]
+  wobei $0_V = (0, 0)$ und $-(x_1, x_2) = (-x_1, -x_2)$. Anschaulich: Ortsvektoren, Geschwindigkeitsvektoren, Kraftfelder.
+  \item Beispiel (a) lässt sich auf beliebige Körper und höhere Dimensionen verallgemeinern: Sei $K$ ein Körper und $n \in \N_0$. Der \emph{Standardvektorraum}
+  \[
+    V = K^n = \{(x_1, x_2, \dots, x_n) \mid x_k \in K \text{ für alle } k\}
+  \]
+  ist ausgestattet mit
+  \[
+    (x_1, \dots, x_n) + (y_1, \dots, y_n) = (x_1 + y_1, \dots, x_n + y_n) \qquad\text{und}\qquad a (x_1, \dots, x_n) = (a x_1, \dots, a x_n)
+  \]
+  für $a \in K$. Insbesondere ist für $n = 0$ der Raum $V = K^0 = \{()\} = \{0_V\}$ ein (bzw.\ \emph{der}) Nullvektorraum. Für $K = \mathbb{F}_2$ und $n = 2$ erhalten wir $\mathbb{F}_2^2 = \{(0, 0), (1, 0), (0, 1), (1, 1)\}$:
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=1.6]
+    \foreach \x/\y in {0/0, 1/0, 0/1, 1/1} {
+      \fill (\x,\y) circle (1.5pt);
+      \node[below] at (\x,\y) {\small $(\x, \y)$};
+    }
+  \end{tikzpicture}
+  \caption{Die vier Vektoren von $\mathbb{F}_2^2$}
+  \end{figure}
+  Wir schreiben Vektoren hier als \emph{Zeilenvektoren} $(x_1, x_2, \dots, x_n)$. \emph{Spaltenvektoren} wie $\left(\begin{smallmatrix} x_1 \\ x_2 \\ x_3 \end{smallmatrix}\right)$ verwenden wir erst in der Linearen Algebra~2.
+  \item Vektorräume treten als Lösungsräume homogener linearer Differentialgleichungen auf.
+  \item Verallgemeinerung von (b), motiviert durch (c): Sei $I$ eine beliebige Indexmenge und $K$ ein Körper. Dann ist
+  \[
+    V = \operatorname{Abb}(I, K) = \{x \mid x\colon I \to K \text{ Abbildung}\}
+  \]
+  mit den bildweise definierten Verknüpfungen
+  \[
+    (x + y)(i) = x(i) + y(i) \qquad\text{und}\qquad (a x)(i) = a \cdot x(i) \qquad (i \in I,\ a \in K)
+  \]
+  ein $K$-Vektorraum. Für $I = \{1, \dots, n\}$ erhält man wieder $K^n$ aus (b).
+  \item Jeder Vektorraum $\{0\}$, der nur aus dem Nullvektor besteht, heißt \emph{Nullvektorraum}.
+\end{enumerate}
+\end{beispiel}
+
+\section{Untervektorräume}
+
+\emph{Generalvoraussetzung:} Sei $K$ ein Körper und $V$ ein $K$-Vektorraum.
+
+\begin{definition}
+Eine Teilmenge $U \subseteq V$ heißt \emph{Untervektorraum} (kurz \emph{UVR}) von $V$, falls $U$ bezüglich der Einschränkungen
+\[
+  +|_{U \times U}\colon U \times U \to V \qquad\text{und}\qquad \cdot|_{K \times U}\colon K \times U \to V
+\]
+selbst ein $K$-Vektorraum ist. Insbesondere müssen dafür die Bilder dieser Einschränkungen in $U$ liegen.
+\end{definition}
+
+\begin{hilfssatz}[UVR-Kriterium]\label{hs:uvr}
+Sei $U \subseteq V$. Dann ist $U$ genau dann ein Untervektorraum von $V$, wenn die folgenden Bedingungen erfüllt sind:
+\begin{enumerate}[label=(\textup{U\arabic*}),leftmargin=3.2em]
+  \item $U \neq \emptyset$;
+  \item $\forall x, y \in U\colon x + y \in U$;
+  \item $\forall a \in K\ \forall x \in U\colon a x \in U$.
+\end{enumerate}
+\end{hilfssatz}
+
+\begin{bem}
+Der nachfolgende Beweis zeigt zusätzlich: Der Nullvektor $0_V$ ist in jedem Untervektorraum $U$ als Element enthalten und fungiert dort als Nullvektor. Entsprechend kann die Bedingung (U1) durch $0_V \in U$ ersetzt werden.
+\end{bem}
+
+\begin{proof}
+\glqq$\Rightarrow$\grqq: Sei $U$ ein Untervektorraum von $V$. Dann ist $U \neq \emptyset$ wegen $0_U \in U$, und (U2), (U3) sind ebenfalls erfüllt, da die Vektoraddition und die skalare Multiplikation des Vektorraums $U$ jeweils Vektoren in $U$ liefern.
+
+\glqq$\Leftarrow$\grqq: Seien umgekehrt (U1)--(U3) erfüllt. Nach (U2) und (U3) liefern die Einschränkungen der Vektoraddition und der skalaren Multiplikation jedenfalls Verknüpfungen $U \times U \to U$ und $K \times U \to U$. Die Bedingungen (VA1), (VA2) und (SM1)--(SM4) vererben sich direkt von $V$ auf $U$.
+
+Wegen (U3) und Lemma~\ref{lem:vr-folgerungen}\,(b) liegt für jedes $x \in U$ auch das in $V$ vorhandene additive Inverse $-x = (-1_K)x$ wieder in $U$. Wegen (U1) existiert wenigstens ein $z \in U$, mittels (U2) also auch $0_V = z + (-z) \in U$. Insbesondere gilt $x + 0_V = 0_V + x = x$ für jedes $x \in U$. Gilt für irgendein $\tilde 0 \in U$ ebenfalls $x + \tilde 0 = \tilde 0 + x = x$ für alle $x \in U$, so folgt $\tilde 0 = 0_V + \tilde 0 = 0_V$. Damit ist (VA3) für $U$ sinngemäß mit $0_V$ erfüllt, und auch (VA4) (einschließlich der Eindeutigkeit von $-x$, die sich von $V$ vererbt).
+\end{proof}
+
+\begin{beispiel}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+  \item Jedenfalls sind $\{0\}$ und $V$ stets Untervektorräume von $V$; sie heißen die \emph{trivialen} Untervektorräume.
+  \item Seien $m, n \in \N$ und $a_{ij} \in K$ für $1 \leq i \leq m$, $1 \leq j \leq n$. Dann bildet die Menge aller Lösungen $(x_1, \dots, x_n) \in K^n$ des homogenen linearen Gleichungssystems
+  \[
+    (*) \qquad
+    \begin{aligned}
+      a_{11} x_1 + a_{12} x_2 + \dots + a_{1n} x_n &= 0\\
+      &\ \,\vdots\\
+      a_{m1} x_1 + a_{m2} x_2 + \dots + a_{mn} x_n &= 0
+    \end{aligned}
+  \]
+  einen Untervektorraum des Standardvektorraums $V = K^n$. (Nach Hilfssatz~\ref{hs:uvr}: $(0, \dots, 0)$ ist eine Lösung, und Summen sowie skalare Vielfache von Lösungen sind wieder Lösungen.)
+  \begin{bem}
+  Prinzipiell ergibt sich jeder Untervektorraum von $K^n$ als Lösungsmenge eines geeigneten Systems $(*)$ (eine indirekte Folgerung aus dem UVR-Kriterium).
+  \end{bem}
+  \item $K = \R$, $V = \R^2$. Untervektorräume von $V$ sind $\{0\}$, $V$ und die Geraden durch den Ursprung:
+  \[
+    \{(x, cx) \mid x \in \R\} \ (c \in \R) \qquad\text{und}\qquad \{(0, y) \mid y \in \R\}.
+  \]
+  \begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.9,>=stealth]
+    \draw[->] (-2.5,0) -- (2.8,0) node[right] {$x$};
+    \draw[->] (0,-2.2) -- (0,2.6) node[above] {$y$};
+    \draw[thick,blue] (-2.2,-1.1) -- (2.2,1.1) node[right] {\small $c = \tfrac{1}{2}$};
+    \draw[thick,blue] (-1.6,1.6) -- (1.6,-1.6) node[right] {\small $c = -1$};
+    \fill (0,0) circle (1.5pt);
+  \end{tikzpicture}
+  \caption{Geraden durch den Ursprung sind Untervektorräume von $\R^2$.}
+  \end{figure}
+  \item Wie sehen die Untervektorräume des endlichen Vektorraums $\mathbb{F}_2^n$ für $n \in \N$ aus? Wie viele gibt es in Abhängigkeit von $n$? $\leadsto$ Kombinatorik, diskrete Geometrie, auch Kodierungstheorie.
+  \item Sei $I$ eine beliebige Indexmenge. Nach Beispiel~\ref{bsp:vektorraeume}\,(d) ist $V = K^I = \operatorname{Abb}(I, K)$ ein $K$-Vektorraum. Für unendliches $I$, beispielsweise $I = \N$, bildet
+  \[
+    U = K^{(I)} = \{x \in K^I \mid x(i) \neq 0 \text{ für nur endlich viele } i \in I\}
+  \]
+  einen Untervektorraum von $V$. Diese Vektorräume $K^{(I)}$ sind die allgemeinsten Modelle für $K$-Vektorräume mit Basis (später).
+\end{enumerate}
+\end{beispiel}
 
 \end{document}
