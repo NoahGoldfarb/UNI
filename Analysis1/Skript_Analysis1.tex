@@ -620,10 +620,180 @@ Sei $(K, +, \cdot)$ ein Körper. Dann gilt:
   \item Die inversen Elemente bezüglich der Addition bzw.\ der Multiplikation sind eindeutig bestimmt. Sie werden als $-a$ bzw.\ $\frac{1}{a}$ (oder $a^{-1}$) geschrieben.
 \end{enumerate}
 \end{lemma}
-% Beweis von Lemma 1.15 folgt in der nächsten Vorlesung.
 
 \begin{bemerkung}
 Ein Tripel $(K, +, \cdot)$, das die Axiome (K1)--(K4) und (K6)--(K8) erfüllt (also alle außer der Existenz multiplikativer Inverser), heißt ein \emph{kommutativer Ring mit Eins}. Beispiel: $\Z$.
 \end{bemerkung}
+
+% ======================================================================
+% Vorlesung 6
+% ======================================================================
+\begin{bem}
+\leavevmode
+\begin{itemize}
+  \item Lemma~\ref{lem:koerper} gilt auch für kommutative Ringe mit Eins (bis auf die Aussage über multiplikative Inverse, die dort nicht existieren müssen), da im Beweis das Axiom (K5) nicht verwendet wird.
+  \item Für $a + (-b)$ schreiben wir kurz $a - b$, für $a \cdot \frac{1}{b}$ kurz $\frac{a}{b}$.
+\end{itemize}
+\end{bem}
+
+\begin{proof}[Beweis von Lemma~\ref{lem:koerper}]
+(1) Seien $a, b \in K$ und $c, d \in K$ additive Inverse von $a$ bzw.\ $b$, d.\,h.\ $a + c = 0$ und $b + d = 0$. Wähle weiter $e \in K$ mit $c + e = 0$. Dann ist $c$ auch \glqq von links\grqq{} invers zu $a$:
+\[
+  c + a = (c + a) + 0 = (c + a) + (c + e) = \bigl(c + (a + c)\bigr) + e = (c + 0) + e = c + e = 0.
+\]
+Damit ist die $0$ auch von links neutral:
+\[
+  0 + a = (a + c) + a = a + (c + a) = a + 0 = a.
+\]
+Aus (K8) und (K7) folgt $x \cdot (1 + 1) = x + x$ für alle $x \in K$ und damit
+\[
+  (a + a) + (b + b) = a(1 + 1) + b(1 + 1) = (a + b)(1 + 1) = (a + b) + (a + b).
+\]
+Somit gilt
+\begin{align*}
+  a + b &= 0 + (a + b) + 0 = (c + a) + (a + b) + (b + d) = c + (a + a) + (b + b) + d\\
+        &= c + (a + b) + (a + b) + d = (c + a) + (b + a) + (b + d) = 0 + (b + a) + 0 = b + a.
+\end{align*}
+
+(2) Ist $0'$ eine weitere Null und $1'$ eine weitere Eins, so folgt mit (1) bzw.\ (K7)
+\[
+  0 = 0 + 0' = 0' + 0 = 0' \qquad\text{und}\qquad 1 = 1 \cdot 1' = 1' \cdot 1 = 1'.
+\]
+
+(3) Aus $a + b = 0$ und $a + c = 0$ folgt mit (1)
+\[
+  b = b + 0 = b + (a + c) = (b + a) + c = 0 + c = c.
+\]
+Für multiplikative Inverse argumentiert man genauso mit (K6) und (K7).
+\end{proof}
+
+\begin{bem}
+In jedem Körper $(K, +, \cdot)$ gelten fast alle von $\Q$ bekannten arithmetischen Rechenregeln, zum Beispiel die folgenden.
+\end{bem}
+
+\begin{lemma}\label{lem:rechenregeln}
+Für $a, b \in K$ und $c, d \in K \setminus \{0\}$ gilt:
+\begin{enumerate}[label=(\arabic*)]
+  \item $-(-a) = a$ und $\frac{1}{1/c} = c$.
+  \item $(-a) + (-b) = -(a + b)$ und $\frac{1}{c} \cdot \frac{1}{d} = \frac{1}{cd}$.
+  \item $a \cdot 0 = 0$, $a \cdot (-b) = -(ab)$ und $(-a) \cdot (-b) = ab$.
+  \item Aus $ab = 0$ folgt $a = 0$ oder $b = 0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) Wegen $a + (-a) = 0 \iff (-a) + a = 0$ ist $a$ das additive Inverse von $-a$, d.\,h.\ $a = -(-a)$. Analog für $\frac{1}{1/c} = c$.
+
+(2) Aus $a + (-a) = 0$ und $b + (-b) = 0$ folgt
+\[
+  0 = 0 + 0 = \bigl(a + (-a)\bigr) + \bigl(b + (-b)\bigr) = \bigl((-a) + (-b)\bigr) + (a + b),
+\]
+also ist $(-a) + (-b)$ das additive Inverse von $a + b$. Analog für die Multiplikation (dabei ist $cd \neq 0$ nach (4)).
+
+(3) Es ist $a \cdot 0 = a \cdot (0 + 0) = a \cdot 0 + a \cdot 0$; Addition von $-(a \cdot 0)$ auf beiden Seiten liefert $0 = a \cdot 0$. Damit folgt
+\[
+  ab + a(-b) = a\bigl(b + (-b)\bigr) = a \cdot 0 = 0,
+\]
+also $a(-b) = -(ab)$. Daraus und mit (1) ergibt sich $(-a)(-b) = -\bigl((-a)b\bigr) = -\bigl(-(ab)\bigr) = ab$.
+
+(4) Angenommen, $ab = 0$ und $a \neq 0$. Dann folgt mit (3)
+\[
+  0 = \frac{1}{a} \cdot 0 = \frac{1}{a} \cdot (a b) = \Bigl(\frac{1}{a} \cdot a\Bigr) b = b,
+\]
+also $b = 0$.
+\end{proof}
+
+% ======================================================================
+% Vorlesung 7
+% ======================================================================
+\subsection{Reelle Zahlen}
+
+\begin{definition}
+Sei $K$ ein Körper und $P \subseteq K$ eine Teilmenge mit
+\begin{enumerate}[label=(O\arabic*)]
+  \item (\emph{Trichotomie}) Für jedes $a \in K$ gilt \emph{genau eine} der Aussagen $a \in P$, $a = 0$, $-a \in P$.
+  \item (\emph{Abgeschlossenheit bzgl.\ Addition und Multiplikation}) Für alle $a, b \in P$ sind auch $a + b \in P$ und $a \cdot b \in P$.
+\end{enumerate}
+Dann heißt $(K, P)$ ein \emph{angeordneter Körper}. Die Elemente von $P$ heißen \emph{positiv}, die von $-P = \{-a \mid a \in P\}$ \emph{negativ}. Schreibweise:
+\[
+  a > b,\ b < a \quad :\iff \quad a - b \in P,
+  \qquad\qquad
+  a \geq b,\ b \leq a \quad :\iff \quad a - b \in P \cup \{0\}.
+\]
+\end{definition}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \draw[thick] (-4,0) -- (-0.3,0);
+  \draw[thick] (0.3,0) -- (4,0);
+  \fill (0,0) circle (2pt);
+  \node[above] at (0,0.1) {$0$};
+  \node[above] at (-2,0.1) {$-P$};
+  \node[above] at (2,0.1) {$P$};
+\end{tikzpicture}
+\caption{Nach (O1) zerfällt $K$ disjunkt in $-P$, $\{0\}$ und $P$.}
+\end{figure}
+
+\begin{bsp}
+\leavevmode
+\begin{enumerate}[label=(\arabic*)]
+  \item $\Q$ mit $P = \bigl\{\, \frac{p}{q} \bigm| p, q \in \Z,\ p, q > 0 \,\bigr\}$ ist ein angeordneter Körper.
+  \item Auf $\mathbb{F}_2$ gibt es keine Anordnung: $0_{\mathbb{F}_2}$ kann wegen der Trichotomie nicht in $P$ liegen. Für $P = \emptyset$ wäre (O1) für $a = 1_{\mathbb{F}_2}$ verletzt, also muss $P = \{1_{\mathbb{F}_2}\}$ sein. Nach (O2) folgt dann aber $0_{\mathbb{F}_2} = 1_{\mathbb{F}_2} + 1_{\mathbb{F}_2} \in P$, was wieder (O1) widerspricht.
+\end{enumerate}
+\end{bsp}
+
+\begin{lemma}\label{lem:ordnung}
+Sei $(K, P)$ ein angeordneter Körper. Die Relation $>$ erfüllt für $a, b, c, \lambda \in K$ die folgenden Rechenregeln:
+\begin{enumerate}[label=(\arabic*)]
+  \item (\emph{Transitivität}) Aus $a > b$ und $b > c$ folgt $a > c$.
+  \item $a > b \iff -a < -b$.
+  \item $a > b \iff a + c > b + c$.
+  \item Aus $a > b$ und $c > 0$ folgt $ac > bc$.
+  \item Aus $a \neq 0$ folgt $a^2 > 0$; insbesondere ist $1 = 1^2 > 0$.
+  \item Aus $a > 0$ folgt $\frac{1}{a} > 0$.
+  \item Falls $a > b$ und $0 < \lambda < 1$, so ist $a > \lambda a + (1 - \lambda) b > b$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) Mit $a - b \in P$ und $b - c \in P$ ist nach (O2) auch
+\[
+  a - c = (a - b) + (b - c) \in P.
+\]
+
+(2) $a - b \in P$ bedeutet gerade $(-b) - (-a) \in P$.
+
+(3) $a - b \in P$ bedeutet für jedes $c \in K$, dass $(a + c) - (b + c) \in P$.
+
+(4) Falls $a - b \in P$ und $c \in P$, so gilt nach (O2) auch $ca - cb = c(a - b) \in P$.
+
+(5) Für $a \in P$ ist nach (O2) auch $a \cdot a \in P$. Falls $-a \in P$, ist ebenfalls $a \cdot a = (-a) \cdot (-a) \in P$ (Lemma~\ref{lem:rechenregeln}\,(3)). Wegen $1 \neq 0$ folgt insbesondere $1 = 1^2 > 0$.
+
+(6) Sei $a > 0$. Wegen $a \cdot \frac{1}{a} = 1 \neq 0$ ist $\frac{1}{a} \neq 0$. Wäre $\frac{1}{a} < 0$, also $-\frac{1}{a} \in P$, so folgte nach (O2) $-1 = a \cdot \bigl(-\frac{1}{a}\bigr) \in P$, d.\,h.\ $-1 > 0$. Das widerspricht $1 > 0$ aus (5) und der Trichotomie.
+
+(7) Wegen $\lambda > 0$, $1 - \lambda > 0$ und $a - b > 0$ folgt aus (O2)
+\[
+  \lambda (a - b) > 0 \qquad\text{und}\qquad (1 - \lambda)(a - b) > 0.
+\]
+Mit (3) ergibt die erste Ungleichung $\lambda a + (1 - \lambda) b = \lambda (a - b) + b > b$, die zweite $a - \bigl(\lambda a + (1 - \lambda) b\bigr) = (1 - \lambda)(a - b) > 0$, also $a > \lambda a + (1 - \lambda) b$.
+\end{proof}
+
+\begin{lemma}\label{lem:einbettung-N}
+Sei $(K, P)$ ein angeordneter Körper. Dann gibt es eine kanonische injektive Abbildung $\iota\colon \N \to K$ mit
+\[
+  \iota(1_{\N}) = 1_K, \qquad \iota(n + m) = \iota(n) + \iota(m), \qquad \iota(n \cdot m) = \iota(n) \cdot \iota(m).
+\]
+\end{lemma}
+
+\begin{bem}
+\leavevmode
+\begin{itemize}
+  \item \emph{Kanonisch} bedeutet: nicht von weiteren Wahlen abhängig, also durch das Gegebene bereits eindeutig bestimmt.
+  \item Für allgemeine Körper ist die Aussage falsch, wie das Beispiel $\mathbb{F}_2$ zeigt: Dort wäre $\iota(2) = 1 + 1 = 0 = \iota(0)$, also $\iota$ nicht injektiv.
+  \item \emph{Idee:} Nach den ersten beiden Eigenschaften muss $\iota(n) = 1_K + \dots + 1_K$ ($n$ Summanden) gelten.
+\end{itemize}
+\end{bem}
+% Beweis von Lemma 1.20 folgt in der nächsten Vorlesung.
 
 \end{document}
