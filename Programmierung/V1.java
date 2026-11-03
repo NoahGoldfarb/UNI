@@ -1,18 +1,17 @@
-static void main() {
-    // int i = 1;
-    // int out;
-    // int j;
-    // while (i <= 10){
-    //     out = 2;
-    //     j = 0;
-    //     while (j < i-1){
-    //         out = out * 2;
-    //         j++;
-    //     }
-    //     System.out.println(out);
-    //     i++;
-    // }
-    for (int k = 0; k<100; k++){
-        System.out.println(k);
+static void main(){
+    for (int i = 0; i<20; i++){
+
+        System.out.println(f(i));
+        System.out.println((double)f(i+1)/(double)f(i));
     }
+}
+static int f(int n){
+    int lastfib = 0;
+    int stlfib = 1;
+    for (int i=2; i<=n; i++){
+        int newfib = lastfib+stlfib;
+        stlfib = lastfib;
+        lastfib = newfib;
+    }
+    return lastfib;
 }
